@@ -75,12 +75,12 @@ public class CalendarEvent {
 	public String toString() {
 		JSONObject jsonObject = new JSONObject();
 		try {
-			jsonObject.put("name", name);
-			jsonObject.put("description", description);
-			jsonObject.put("calendarName", calendarName);
-			jsonObject.put("location", location);
-			jsonObject.put("startDate", startDate);
-			jsonObject.put("endDate", endDate);
+			jsonObject.put("name", this.name);
+			jsonObject.put("description", this.description);
+			jsonObject.put("calendarName", this.calendarName);
+			jsonObject.put("location", this.location);
+			jsonObject.put("startDate", this.startDate);
+			jsonObject.put("endDate", this.endDate);
 			return jsonObject.toString();
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -88,7 +88,7 @@ public class CalendarEvent {
 		return null;
 	}
 	
-	public static CalendarEvent fromJSON(JSONObject jsonObject){
+	public CalendarEvent fromJSON(JSONObject jsonObject){
 		CalendarEvent event = null;
 		try {
 			String name = (String) jsonObject.get("name");
