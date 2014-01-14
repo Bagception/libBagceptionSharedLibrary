@@ -31,21 +31,24 @@ public class ContainerStateUpdate {
 	
 	@Override
 	public String toString() {
+				
+		return getJSONObject().toString();
+	}
+	public JSONObject getJSONObject(){
 		JSONObject ret = new JSONObject();
 		try {
-			ret.put("activity", activity.toString());
+			ret.put("activity", activity.toJSONObject());
 			ret.put("itemList",ItemListSerializer.serialize(itemList));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
-		return ret.toString();
+		return ret;
 	}
-	
 	public static ContainerStateUpdate fromJSON(JSONObject obj){
 		
 		try {
-			Activity activity = Activity.fromJSON(obj.getJSONObject("activity"));
+			JSONObject activityJSON = obj.getJSONObject("activity");
+			Activity activity = Activity.fromJSON(activityJSON);
 			List<Item> itemList = ItemListSerializer.deserialize(obj.getJSONArray("itemList"));
 			ContainerStateUpdate ret = new ContainerStateUpdate(activity, itemList);
 			return ret;

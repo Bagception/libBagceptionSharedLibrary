@@ -48,6 +48,10 @@ public class Item{
 	 * converts the object to json
 	 */
 	public String toString() {
+		return toJSONObject().toString();
+	}
+	
+	public JSONObject toJSONObject(){
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put("name", name);
@@ -58,14 +62,13 @@ public class Item{
 				ar.put(id);
 			}
 			obj.put("tagIDs", ar);
-			return obj.toString();
+			return obj;
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		
 		return null;
 	}
-	
 	
 	public static Item fromJSON(JSONObject obj) throws JSONException{
 		String name = (String) obj.getString("name");

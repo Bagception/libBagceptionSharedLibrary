@@ -32,6 +32,11 @@ public class Activity {
 	
 	@Override
 	public String toString() {
+		
+		return toJSONObject().toString();
+	}
+	
+	public JSONObject toJSONObject(){
 		JSONObject ret = new JSONObject();
 		try {
 			ret.put("name", name);
@@ -39,10 +44,8 @@ public class Activity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
-		return ret.toString();
+		return ret;
 	}
-	
 	
 	public static Activity fromJSON(JSONObject obj){
 		String name;
