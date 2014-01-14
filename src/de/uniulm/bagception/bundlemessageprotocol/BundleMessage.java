@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
-import de.uniulm.bagception.bundlemessageprotocol.entities.ContainerStatus;
+import de.uniulm.bagception.bundlemessageprotocol.BundleMessage.BUNDLE_MESSAGE;
 import de.uniulm.bagception.bundlemessageprotocol.entities.Item;
 
 public class BundleMessage {
@@ -22,7 +22,7 @@ public class BundleMessage {
 	}
 	
 	public enum BUNDLE_MESSAGE{
-		NOT_A_BUNDLE_MESSAGE,ITEM_FOUND,ITEM_NOT_FOUND,CONTAINER_STATUS;
+		NOT_A_BUNDLE_MESSAGE,ITEM_FOUND,ITEM_NOT_FOUND,CONTAINER_STATUS, CONTAINER_STATUS_UPDATE;
 	}
 	
 	//Item
@@ -39,18 +39,20 @@ public class BundleMessage {
 		return Item.fromJSON(json);
 	}
 	
-	//container status
-	public Bundle toContainerStatusBundle(ContainerStatus status){
-		return createBundle(BUNDLE_MESSAGE.CONTAINER_STATUS, status);
+
+	public JSONObject extractObject(Bundle b){
+		try {
+			return new JSONObject(b.getString(PAYLOAD_EXTRA));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
-	public ContainerStatus toContainerStatus(Bundle b) throws JSONException{
-		JSONObject json = new JSONObject(b.getString(PAYLOAD_EXTRA));
-		return ContainerStatus.fromJSON(json);
-	}
 	
 	
 	
-	private Bundle createBundle(BUNDLE_MESSAGE msg,Object payload){
+	public Bundle createBundle(BUNDLE_MESSAGE msg,Object payload){
 		Bundle ret = new Bundle();
 		
 		ret.putString(MESSAGE_TYPE_EXTRA, msg.ordinal()+"");
