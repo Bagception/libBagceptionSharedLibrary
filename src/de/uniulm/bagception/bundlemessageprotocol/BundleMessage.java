@@ -1,7 +1,9 @@
 package de.uniulm.bagception.bundlemessageprotocol;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import android.os.Bundle;
 import de.uniulm.bagception.bundlemessageprotocol.entities.Item;
@@ -33,19 +35,23 @@ public class BundleMessage {
 		
 		return createBundle(BUNDLE_MESSAGE.ITEM_NOT_FOUND,item);
 	}
-	public Item toItemFound(Bundle b) throws JSONException{
-		JSONObject json = new JSONObject(b.getString(PAYLOAD_EXTRA));
-		return Item.fromJSON(json);
+	public Item toItemFound(Bundle b){
+		
+		return Item.fromJSON(extractObject(b));
+
+		
 	}
 	
 
 	public JSONObject extractObject(Bundle b){
+		JSONParser p = new JSONParser();
+		JSONObject o=null;
 		try {
-			return new JSONObject(b.getString(PAYLOAD_EXTRA));
-		} catch (JSONException e) {
+			o = (JSONObject)p.parse(b.getString(PAYLOAD_EXTRA));
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return o;
 		
 	}
 	

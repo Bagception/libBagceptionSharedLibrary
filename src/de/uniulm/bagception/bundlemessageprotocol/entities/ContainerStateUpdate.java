@@ -2,8 +2,10 @@ package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import de.uniulm.bagception.bundlemessageprotocol.serializer.ItemListSerializer;
 
@@ -32,30 +34,32 @@ public class ContainerStateUpdate {
 	@Override
 	public String toString() {
 				
-		return getJSONObject().toString();
+		return toJSONObject().toJSONString();
 	}
-	public JSONObject getJSONObject(){
+	@SuppressWarnings("unchecked")
+	public JSONObject toJSONObject(){
 		JSONObject ret = new JSONObject();
-		try {
-			ret.put("activity", activity.toJSONObject());
-			ret.put("itemList",ItemListSerializer.serialize(itemList));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		ret.put("activity", activity.toJSONObject());
+		ret.put("itemList",ItemListSerializer.serialize(itemList));
 		return ret;
 	}
 	public static ContainerStateUpdate fromJSON(JSONObject obj){
 		
 		try {
-			JSONObject activityJSON = obj.getJSONObject("activity");
+			JSONParser p = new JSONParser();
+			JSONObject activityJSON = (JSONObject)p.parse(obj.get("activity").toString());
 			Activity activity = Activity.fromJSON(activityJSON);
-			List<Item> itemList = ItemListSerializer.deserialize(obj.getJSONArray("itemList"));
+			p.reset();
+			JSONArray arr;
+			arr = (JSONArray)p.parse(obj.get("itemList").toString());
+			List<Item> itemList = ItemListSerializer.deserialize(arr);
 			ContainerStateUpdate ret = new ContainerStateUpdate(activity, itemList);
 			return ret;
-		} catch (JSONException e) {
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
 		return null;
+		
+
 	}
 }

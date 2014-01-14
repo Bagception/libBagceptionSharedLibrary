@@ -2,8 +2,10 @@ package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import de.uniulm.bagception.bundlemessageprotocol.serializer.ItemListSerializer;
 
@@ -33,28 +35,29 @@ public class Activity {
 	@Override
 	public String toString() {
 		
-		return toJSONObject().toString();
+		return toJSONObject().toJSONString();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public JSONObject toJSONObject(){
 		JSONObject ret = new JSONObject();
-		try {
-			ret.put("name", name);
-			ret.put("items", ItemListSerializer.serialize(itemsForActivity));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		ret.put("name", name);
+		ret.put("items", ItemListSerializer.serialize(itemsForActivity));
 		return ret;
 	}
 	
 	public static Activity fromJSON(JSONObject obj){
 		String name;
+		JSONParser p = new JSONParser();
 		try {
-			name = obj.getString("name");
-			List<Item> items = ItemListSerializer.deserialize(obj.getJSONArray("items"));
+			name = obj.get("name").toString();
+			
+			JSONArray arr =(JSONArray)p.parse(obj.get("items").toString());
+			List<Item> items = ItemListSerializer.deserialize(arr);
 			Activity ret = new Activity(name, items);
 			return ret;
-		} catch (JSONException e) {
+		
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}		
 		return null;
