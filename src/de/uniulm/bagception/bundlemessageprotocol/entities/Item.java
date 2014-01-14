@@ -1,6 +1,7 @@
 package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -18,7 +19,9 @@ public class Item{
 	public Item(String name,String description,ArrayList<String> tagIDs){
 		this.name=name;
 		this.description=description;
+		Collections.sort(tagIDs);
 		this.tagIDs=tagIDs;
+		
 	}
 	public Item(String name){
 		this(name,"");
@@ -76,6 +79,14 @@ public class Item{
 		
 	}
 	
+	@Override
+	public int hashCode() {
+		StringBuilder sb = new StringBuilder();
+		for (String s:tagIDs){
+			sb.append(s);
+		}
+		return sb.hashCode();
+	}
 	
 	
 }
