@@ -32,4 +32,35 @@ public class Calendar {
 	public static final String NUMBER_OF_EVENTS = "numberOfEvents";
 	
 	
+	/**
+	 * Name of a calendar event
+	 */
+	public static final String EVENT_NAME = "name";
+	
+	/**
+	 * Name of the calendar in which the event is located
+	 */
+	public static final String EVENT_CALENDAR_NAME = "calendarName";
+	
+	/**
+	 * Description of a calendar event
+	 */
+	public static final String EVENT_DESCRIPTION = "description";
+	
+	/**
+	 * Location of a calendar event
+	 */
+	public static final String EVENT_LOCATION = "location";
+	
+	/**
+	 * Start date of a calendar event
+	 */
+	public static final String EVENT_START_DATE = "startDate";
+	
+	/**
+	 * End date of a calendar event
+	 */
+	public static final String EVENT_END_DATE = "endDate";
+	
+	
 }
