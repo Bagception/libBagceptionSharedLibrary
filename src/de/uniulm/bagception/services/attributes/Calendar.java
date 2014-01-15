@@ -5,14 +5,14 @@ public class Calendar {
 	
 	/**
 	 * Specifies the request given to our CalendarService
-	 * 1. CALENDAR_EVENTS: if you want to request a list of calendar events
-	 * 2. CALENDAR_NAMES: if you want to request a list of the Android Calendar names
+	 * <br>1. CALENDAR_EVENTS: if you want to request a list of calendar events
+	 * <br>2. CALENDAR_NAMES: if you want to request a list of the Android Calendar names
 	 */
 	public static final String REQUEST_TYPE = "requestType";
 	
 	/**
 	 * 1. List of Android Calendar names for an intent service as a limit for the returned calendar events
-	 * 2. List of Android Calendar names returned from our own CalendarService
+	 * <br>2. List of Android Calendar names returned from our own CalendarService
 	 */
 	public static final String CALENDAR_NAMES = "calendarNames";
 	
