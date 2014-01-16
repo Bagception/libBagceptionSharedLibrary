@@ -1,4 +1,7 @@
-package de.uniulm.bagception.intentservicecommunication;
+package de.uniulm.bagception.bundlemessageprotocol.entities;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CalendarEvent {
 
@@ -68,5 +71,36 @@ public class CalendarEvent {
 		this.endDate = endDate;
 	}
 	
+	@Override
+	public String toString() {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("name", this.name);
+			jsonObject.put("description", this.description);
+			jsonObject.put("calendarName", this.calendarName);
+			jsonObject.put("location", this.location);
+			jsonObject.put("startDate", this.startDate);
+			jsonObject.put("endDate", this.endDate);
+			return jsonObject.toString();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
+	public CalendarEvent fromJSON(JSONObject jsonObject){
+		CalendarEvent event = null;
+		try {
+			String name = (String) jsonObject.get("name");
+			String calendarName = jsonObject.getString("calendarName");
+			String description = jsonObject.getString("description");
+			String location = jsonObject.getString("location");
+			long startDate = jsonObject.getLong("startDate");
+			long endDate = jsonObject.getLong("endDate");
+			return new CalendarEvent(name, calendarName, description, location, startDate, endDate);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return event;
+	}
 }
