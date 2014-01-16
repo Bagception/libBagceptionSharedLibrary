@@ -7,15 +7,24 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import android.graphics.Bitmap;
+import de.uniulm.bagception.bundlemessageprotocol.serializer.PictureSerializer;
+
 
 public class Item{
 
 	private String name;
 	private String description;
 	private ArrayList<String> tagIDs;
+	private Bitmap image;
+	private int imageHash=-1;
 	
-	
-	
+	public int getImageHash() {
+		return imageHash;
+	}
+	public void setImageHash(int imageHash) {
+		this.imageHash = imageHash;
+	}
 	public Item(String name,String description,ArrayList<String> tagIDs){
 		this.name=name;
 		this.description=description;
@@ -31,6 +40,13 @@ public class Item{
 	}
 	
 	
+	
+	public Bitmap getImage() {
+		return image;
+	}
+	public void setImage(Bitmap image) {
+		this.image = image;
+	}
 	public String getName() {
 		return name;
 	}
@@ -56,6 +72,12 @@ public class Item{
 		JSONObject obj = new JSONObject();
 		obj.put("name", name);
 		obj.put("description", description);
+		if (image!=null){
+			int hash = PictureSerializer.serialize(image).hashCode();
+			obj.put("image",hash);
+		}else{
+			obj.put("image","0");
+		}
 		
 		JSONArray ar = new JSONArray();
 		for (String id:tagIDs){
@@ -70,7 +92,10 @@ public class Item{
 		String description = (String) obj.get("description");
 		@SuppressWarnings("unchecked")
 		ArrayList<String> ar = (ArrayList<String>) obj.get("tagIDs");
-		return new Item(name,description,ar);
+		int imageId = Integer.parseInt(obj.get("image").toString()); 
+		Item i = new Item(name,description,ar);
+		i.setImageHash(imageId);
+		return i;
 		
 	}
 	
