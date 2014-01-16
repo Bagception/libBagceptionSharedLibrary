@@ -3,6 +3,7 @@ package de.uniulm.bagception.bundlemessageprotocol.entities;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,7 +12,7 @@ import android.graphics.Bitmap;
 import de.uniulm.bagception.bundlemessageprotocol.serializer.PictureSerializer;
 
 
-public class Item{
+public class Item extends Observable{
 
 	private String name;
 	private String description;
@@ -46,6 +47,9 @@ public class Item{
 	}
 	public void setImage(Bitmap image) {
 		this.image = image;
+		this.setChanged();
+		this.notifyObservers();
+
 	}
 	public String getName() {
 		return name;
