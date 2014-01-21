@@ -112,6 +112,27 @@ public class Item extends Observable{
 		return sb.hashCode();
 	}
 	
-
-	
+	@Override
+	public boolean equals(Object o) {
+		if (o==null) return false;
+		
+		if (!(o instanceof Item)) {
+			return false;
+			
+		}
+		Item oItem = (Item) o;
+		if (!getName().equals(oItem.getName())) return false;
+		if (!getDescription().equals(oItem.getDescription())) return false;
+		if (getImageHash() != oItem.getImageHash()) return false;
+		if (getIds().size() != oItem.getIds().size()) return false;
+		
+		
+		for(int i=0;i<getIds().size();i++){
+			if (!getIds().get(i).equals(oItem.getIds().get(i))){
+				return false;
+			}
+		}
+		
+		return true;
+	} 
 }
