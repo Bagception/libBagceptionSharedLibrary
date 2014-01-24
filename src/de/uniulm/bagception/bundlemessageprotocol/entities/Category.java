@@ -2,8 +2,11 @@ package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import org.json.simple.JSONObject;
 
+
 public class Category {
 
+	public static Category NO_CATEGORY = new Category(0, "uncategorized");
+	
 	public final int id;
 	public final String name;
 	
@@ -25,7 +28,7 @@ public class Category {
 	}
 	
 	public static Category fromJSON(JSONObject json){
-		int id = (Integer) json.get("id");
+		int id = Integer.parseInt(json.get("id").toString());
 		String name = (String) json.get("name");
 		return new Category(id,name);
 	}

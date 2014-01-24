@@ -8,6 +8,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import android.util.Log;
+
 import de.uniulm.bagception.bundlemessageprotocol.entities.Item;
 
 public class ItemListSerializer {
@@ -30,7 +32,11 @@ public class ItemListSerializer {
 				
 				Object obj = p.parse(jsonArray.get(i).toString());
 				JSONObject o = (JSONObject)obj;
-				l.add(Item.fromJSON(o));
+				Log.d("debug", obj+"");
+				Log.d("debug", o+"");
+				if (o != null){
+					l.add(Item.fromJSON(o));
+				}
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

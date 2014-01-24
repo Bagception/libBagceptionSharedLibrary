@@ -1,7 +1,7 @@
 package de.uniulm.bagception.bundlemessageprotocol.entities;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
+
 
 public class CalendarEvent {
 
@@ -71,36 +71,34 @@ public class CalendarEvent {
 		this.endDate = endDate;
 	}
 	
-	@Override
-	public String toString() {
+	@SuppressWarnings("unchecked")
+	public JSONObject toJSONObject(){
 		JSONObject jsonObject = new JSONObject();
-		try {
+		
 			jsonObject.put("name", this.name);
 			jsonObject.put("description", this.description);
 			jsonObject.put("calendarName", this.calendarName);
 			jsonObject.put("location", this.location);
 			jsonObject.put("startDate", this.startDate);
 			jsonObject.put("endDate", this.endDate);
-			return jsonObject.toString();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
+			return jsonObject;
+		
+	}
+	
+	@Override
+	public String toString() {
+		return toJSONObject().toJSONString();
 	}
 	
 	public CalendarEvent fromJSON(JSONObject jsonObject){
-		CalendarEvent event = null;
-		try {
-			String name = (String) jsonObject.get("name");
-			String calendarName = jsonObject.getString("calendarName");
-			String description = jsonObject.getString("description");
-			String location = jsonObject.getString("location");
-			long startDate = jsonObject.getLong("startDate");
-			long endDate = jsonObject.getLong("endDate");
-			return new CalendarEvent(name, calendarName, description, location, startDate, endDate);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return event;
+		
+		String name = (String) jsonObject.get("name");
+		String calendarName = (String) jsonObject.get("calendarName");
+		String description = (String) jsonObject.get("description");
+		String location = (String) jsonObject.get("location");
+		long startDate = (Long) jsonObject.get("startDate");
+		long endDate = (Long) jsonObject.get("endDate");
+		return new CalendarEvent(name, calendarName, description, location, startDate, endDate);
+		
 	}
 }

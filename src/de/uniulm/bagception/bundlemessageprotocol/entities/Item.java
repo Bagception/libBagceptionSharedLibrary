@@ -72,6 +72,7 @@ public class Item extends Observable{
 		return id;
 	}
 	public Category getCategory() {
+		if (category == null) return Category.NO_CATEGORY;
 		return category;
 	}
 	public String getVisibility() {
@@ -107,8 +108,15 @@ public class Item extends Observable{
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSONObject(){
 		JSONObject obj = new JSONObject();
+		obj.put("id", id);
 		obj.put("name", name);
-		obj.put("category", getCategory().toJSONObject());
+		Category cat = getCategory();
+		if (cat==null){
+			obj.put("category", null);	
+		}else{
+			obj.put("category", cat);
+		}
+		
 		obj.put("visibility", visibility);
 		
 		if (image!=null){
@@ -133,7 +141,7 @@ public class Item extends Observable{
 	}
 	
 	public static Item fromJSON(JSONObject obj){
-		int id = (Integer) obj.get("id");
+		int id = Integer.parseInt(obj.get("id").toString());
 		
 		String name = (String) obj.get("name");
 		@SuppressWarnings("unchecked")

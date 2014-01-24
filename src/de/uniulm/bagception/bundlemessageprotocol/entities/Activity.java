@@ -13,10 +13,11 @@ public class Activity {
 
 	private final List<Item> itemsForActivity;
 	private final String name;
-	
-	public Activity(String name,List<Item> itemsForActivity) {
+	private final Location location;
+	public Activity(String name,List<Item> itemsForActivity,Location location) {
 		this.name = name;
 		this.itemsForActivity = itemsForActivity;
+		this.location = location;
 	}
 	
 	
@@ -28,6 +29,10 @@ public class Activity {
 	
 	public List<Item> getItemsForActivity() {
 		return itemsForActivity;
+	}
+	
+	public Location getLocation(){
+		return location;
 	}
 	
 	//Serializing
@@ -43,6 +48,7 @@ public class Activity {
 		JSONObject ret = new JSONObject();
 		ret.put("name", name);
 		ret.put("items", ItemListSerializer.serialize(itemsForActivity));
+		ret.put("location", location.toJSONObject());
 		return ret;
 	}
 	
@@ -54,7 +60,9 @@ public class Activity {
 			
 			JSONArray arr =(JSONArray)p.parse(obj.get("items").toString());
 			List<Item> items = ItemListSerializer.deserialize(arr);
-			Activity ret = new Activity(name, items);
+			JSONObject o = (JSONObject)p.parse(obj.get("location").toString());
+			Location loc = Location.fromJSONObject(o);
+			Activity ret = new Activity(name, items,loc);
 			return ret;
 		
 		} catch (ParseException e) {

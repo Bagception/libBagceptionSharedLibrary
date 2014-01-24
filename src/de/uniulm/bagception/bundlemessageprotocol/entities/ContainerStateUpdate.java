@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import de.philipphock.android.lib.logging.LOG;
 import de.uniulm.bagception.bundlemessageprotocol.serializer.ItemListSerializer;
 
 public class ContainerStateUpdate {
@@ -41,6 +42,7 @@ public class ContainerStateUpdate {
 		JSONObject ret = new JSONObject();
 		ret.put("activity", activity.toJSONObject());
 		ret.put("itemList",ItemListSerializer.serialize(itemList));
+		LOG.out(this,ret.toJSONString());
 		return ret;
 	}
 	public static ContainerStateUpdate fromJSON(JSONObject obj){

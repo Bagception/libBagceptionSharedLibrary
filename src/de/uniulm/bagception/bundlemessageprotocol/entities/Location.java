@@ -4,18 +4,20 @@ import org.json.simple.JSONObject;
 
 public class Location {
 
+	public final int id;
 	public final String name;
 	public final Float lat;
 	public final Float lng;
 	public final Integer radius;
 	public final String mac;
 
-	public Location(String name, Float lat, Float lng,Integer radius,String mac){
+	public Location(int id, String name, Float lat, Float lng,Integer radius,String mac){
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
 		this.radius = radius;
 		this.mac = mac;
+		this.id = id;
 	}
 
 	/**
@@ -69,12 +71,12 @@ public class Location {
 	
 	public static Location fromJSONObject(JSONObject obj){
 		String name = (String) obj.get("name");
-		Float lng = (Float) obj.get("lng");
-		Float lat = (Float) obj.get("lat");
-		Integer rad = (Integer)obj.get("rad");
+		Float lng = Float.parseFloat(obj.get("lng").toString());
+		Float lat = Float.parseFloat(obj.get("lat").toString());
+		Integer rad = Integer.parseInt(obj.get("rad").toString());
 		String mac = (String) obj.get("mac");
-		
-		return new Location(name, lat, lng, rad, mac);
+		Integer id = Integer.parseInt(obj.get("id").toString());
+		return new Location(id,name, lat, lng, rad, mac);
 	}
 	
 	@Override
@@ -89,7 +91,7 @@ public class Location {
 		ret.put("lng", lng);
 		ret.put("rad", radius);
 		ret.put("mac", mac);
-		
+		ret.put("id", id);
 		return ret;
 		
 	}
