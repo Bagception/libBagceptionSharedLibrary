@@ -14,11 +14,20 @@ import de.uniulm.bagception.bundlemessageprotocol.serializer.PictureSerializer;
 
 public class Item extends Observable{
 
-	private String name;
-	private String description;
+	public static final String VISIBILITY_PUBLIC = "public";
+	public static final String VISIBILITY_PRIVATE = "private";
+	
+	private final int id;
+	private final String name;
+	private final Category category;
+	private final String visibility;
+	
 	private ArrayList<String> tagIDs;
 	private Bitmap image;
 	private int imageHash=-1;
+	
+	private final boolean isActivityIndependent;
+	private final boolean isImportant;
 	
 	public int getImageHash() {
 		return imageHash;
@@ -26,22 +35,48 @@ public class Item extends Observable{
 	public void setImageHash(int imageHash) {
 		this.imageHash = imageHash;
 	}
-	public Item(String name,String description,ArrayList<String> tagIDs){
+	public Item(int id, String name,Category category, String visibility, ArrayList<String> tagIDs, int imageHash,boolean isActivityIndependent,boolean isImportant){
+		this.id = id;
 		this.name=name;
-		this.description=description;
+		this.category = category;
+		if (! (Item.VISIBILITY_PRIVATE.equals(visibility) || Item.VISIBILITY_PUBLIC.equals(visibility))){
+			throw new IllegalArgumentException(String.format("Visibility must be a String value of {%s, %s}",Item.VISIBILITY_PRIVATE,Item.VISIBILITY_PUBLIC));
+		}
+		this.visibility = visibility;
 		Collections.sort(tagIDs);
 		this.tagIDs=tagIDs;
+		this.imageHash = imageHash;
+		this.isActivityIndependent = isActivityIndependent;
+		this.isImportant = isImportant;
 		
 	}
+	
+	public Item(String name,ArrayList<String> tagIDs){
+		this(-1,name,null,Item.VISIBILITY_PUBLIC,tagIDs,0,false, false);
+		
+	}
+	public boolean isActivityIndependent() {
+		return isActivityIndependent;
+	}
+	public boolean isImportant() {
+		return isImportant;
+	}
 	public Item(String name){
-		this(name,"");
-	}
-	public Item(String name,String description){
-		this(name,description,new ArrayList<String>());
+		this(name,null);
 	}
 	
 	
 	
+	
+	public int getId() {
+		return id;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public String getVisibility() {
+		return visibility;
+	}
 	public Bitmap getImage() {
 		return image;
 	}
@@ -54,9 +89,7 @@ public class Item extends Observable{
 	public String getName() {
 		return name;
 	}
-	public String getDescription() {
-		return description;
-	}
+	
 	public List<String> getIds(){
 		return tagIDs;
 	}
@@ -75,7 +108,9 @@ public class Item extends Observable{
 	public JSONObject toJSONObject(){
 		JSONObject obj = new JSONObject();
 		obj.put("name", name);
-		obj.put("description", description);
+		obj.put("category", getCategory().toJSONObject());
+		obj.put("visibility", visibility);
+		
 		if (image!=null){
 			int hash = PictureSerializer.serialize(image).hashCode();
 			obj.put("image",hash);
@@ -88,17 +123,30 @@ public class Item extends Observable{
 			ar.add(id);
 		}
 		obj.put("tagIDs", ar);
+		
+		obj.put("isActivityIndependent", isActivityIndependent);
+		obj.put("isImportant", isImportant);
+		                         
+   
+
 		return obj;
 	}
 	
 	public static Item fromJSON(JSONObject obj){
+		int id = (Integer) obj.get("id");
+		
 		String name = (String) obj.get("name");
-		String description = (String) obj.get("description");
 		@SuppressWarnings("unchecked")
 		ArrayList<String> ar = (ArrayList<String>) obj.get("tagIDs");
-		int imageId = Integer.parseInt(obj.get("image").toString()); 
-		Item i = new Item(name,description,ar);
-		i.setImageHash(imageId);
+		int imageId = Integer.parseInt(obj.get("image").toString());
+		
+		Category c = Category.fromJSON((JSONObject) obj.get("category"));
+		String visibility = (String) obj.get("visibility");
+		boolean isImportant = (Boolean) obj.get("isImportant");
+		boolean isActivityIndependent = (Boolean) obj.get("isActivityIndependent");
+		
+		Item i = new Item(id,name,c,visibility,ar,imageId,isActivityIndependent,isImportant);
+		
 		return i;
 		
 	}
@@ -122,7 +170,8 @@ public class Item extends Observable{
 		}
 		Item oItem = (Item) o;
 		if (!getName().equals(oItem.getName())) return false;
-		if (!getDescription().equals(oItem.getDescription())) return false;
+		if (!getVisibility().equals(oItem.getVisibility())) return false;
+		if (!getCategory().equals(oItem.getCategory())) return false;
 		if (getImageHash() != oItem.getImageHash()) return false;
 		if (getIds().size() != oItem.getIds().size()) return false;
 		
