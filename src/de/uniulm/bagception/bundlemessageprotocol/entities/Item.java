@@ -30,8 +30,13 @@ public class Item extends Observable{
 	private boolean serializeImage=false;
 	private boolean isImportant;
 	
+	public Item(){
+		
+	}
 	
-	
+	public Item(String name,ArrayList<String> ids){
+		this(-1,name,null,ids,0,false,false);
+	}
 
 	
 	public Item(int id, String name, Category category, ArrayList<String> tagIDs, int imageHash, boolean isActivityIndependent, boolean isImportant){
@@ -87,6 +92,10 @@ public class Item extends Observable{
 			this.imageHash = imageHash;
 		}
 	
+		public void serCategory(Category cat){
+			this.category = cat;
+		}
+		
 	//------------------------- getter -------------------------//
 	
 	
