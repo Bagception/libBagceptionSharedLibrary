@@ -189,7 +189,11 @@ public class Item extends Observable{
 		@SuppressWarnings("unchecked")
 		ArrayList<String> ar = (ArrayList<String>) obj.get("tagIDs");
 		int imageId = Integer.parseInt(obj.get("image").toString());
-		Category c = Category.fromJSON((JSONObject) obj.get("category"));
+		JSONObject catObjJson = (JSONObject) obj.get("category");
+		Category c=null;
+		if (catObjJson != null){
+			c = Category.fromJSON(catObjJson);
+		}
 		//String visibility = (String) obj.get("visibility");
 		boolean isImportant = (Boolean) obj.get("isImportant");
 		boolean isActivityIndependent = (Boolean) obj.get("isActivityIndependent");

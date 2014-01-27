@@ -22,25 +22,24 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 	@SuppressWarnings("unchecked")
 	public final void process(AdministrationCommand<?> command){
 		
-		onReply(command);
 		
 		if (command.getEntity() == Entity.ITEM){
 			AdministrationCommand<Item> c = (AdministrationCommand<Item>) command;
 			switch (c.getOperation()){
 				case ADD: 
-					callbacks.onItemAdd(c.getPayloadObjects()[0]);
+					callbacks.onItemAdd(c.getPayloadObjects()[0],c);
 				break;
 				
 				case DEL: 
-					callbacks.onItemDel(c.getPayloadObjects()[0]);
+					callbacks.onItemDel(c.getPayloadObjects()[0],c);
 				break;
 				
 				case EDIT: 
-					callbacks.onItemEdit(c.getPayloadObjects()[0],c.getPayloadObjects()[1]);
+					callbacks.onItemEdit(c.getPayloadObjects()[0],c.getPayloadObjects()[1],c);
 				break;
 				
 				case LIST: 
-					callbacks.onItemList();
+					callbacks.onItemList(c);
 				break;
 			}
 			return;
@@ -50,19 +49,19 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 			AdministrationCommand<Location> c = (AdministrationCommand<Location>) command;
 			switch (c.getOperation()){
 				case ADD: 
-					callbacks.onLocationAdd(c.getPayloadObjects()[0]);
+					callbacks.onLocationAdd(c.getPayloadObjects()[0],c);
 				break;
 				
 				case DEL: 
-					callbacks.onLocationDel(c.getPayloadObjects()[0]);
+					callbacks.onLocationDel(c.getPayloadObjects()[0],c);
 				break;
 				
 				case EDIT: 
-					callbacks.onLocationEdit(c.getPayloadObjects()[0],c.getPayloadObjects()[1]);
+					callbacks.onLocationEdit(c.getPayloadObjects()[0],c.getPayloadObjects()[1],c);
 				break;
 				
 				case LIST: 
-					callbacks.onLocationList();
+					callbacks.onLocationList(c);
 				break;
 			}
 			return;
@@ -72,19 +71,19 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 			AdministrationCommand<Activity> c = (AdministrationCommand<Activity>) command;
 			switch (c.getOperation()){
 				case ADD: 
-					callbacks.onActivityAdd(c.getPayloadObjects()[0]);
+					callbacks.onActivityAdd(c.getPayloadObjects()[0],c);
 				break;
 				
 				case DEL: 
-					callbacks.onActivityDel(c.getPayloadObjects()[0]);
+					callbacks.onActivityDel(c.getPayloadObjects()[0],c);
 				break;
 				
 				case EDIT: 
-					callbacks.onActivityEdit(c.getPayloadObjects()[0],c.getPayloadObjects()[1]);
+					callbacks.onActivityEdit(c.getPayloadObjects()[0],c.getPayloadObjects()[1],c);
 				break;
 				
 				case LIST: 
-					callbacks.onActivityList();
+					callbacks.onActivityList(c);
 				break;
 			}
 			return;
@@ -95,19 +94,19 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 
 			switch (c.getOperation()){
 				case ADD: 
-					callbacks.onCategoryAdd(c.getPayloadObjects()[0]);
+					callbacks.onCategoryAdd(c.getPayloadObjects()[0],c);
 				break;
 				
 				case DEL: 
-					callbacks.onCategoryDel(c.getPayloadObjects()[0]);
+					callbacks.onCategoryDel(c.getPayloadObjects()[0],c);
 				break;
 				
 				case EDIT: 
-					callbacks.onCategoryEdit(c.getPayloadObjects()[0],c.getPayloadObjects()[1]);
+					callbacks.onCategoryEdit(c.getPayloadObjects()[0],c.getPayloadObjects()[1],c);
 				break;
 				
 				case LIST: 
-					callbacks.onCategoryList();
+					callbacks.onCategoryList(c);
 				break;
 			}
 			return;
@@ -117,89 +116,85 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 	}
 
 	@Override
-	public void onItemAdd(Item a) {
+	public void onItemAdd(Item a,AdministrationCommand<Item> i) {
 		
 	}
 
 	@Override
-	public void onItemDel(Item a) {
+	public void onItemDel(Item a,AdministrationCommand<Item> i) {
 		
 	}
 
 	@Override
-	public void onItemEdit(Item toEdit, Item editValues) {
+	public void onItemEdit(Item toEdit, Item editValues,AdministrationCommand<Item> i) {
 		
 	}
 
 	@Override
-	public void onItemList() {
+	public void onItemList(AdministrationCommand<Item> i) {
 		
 	}
 
 	@Override
-	public void onActivityAdd(Activity a) {
+	public void onActivityAdd(Activity a,AdministrationCommand<Activity> i) {
 		
 	}
 
 	@Override
-	public void onActivityDel(Activity a) {
+	public void onActivityDel(Activity a,AdministrationCommand<Activity> i) {
 		
 	}
 
 	@Override
-	public void onActivityEdit(Activity toEdit, Activity editValues) {
+	public void onActivityEdit(Activity toEdit, Activity editValues,AdministrationCommand<Activity> i) {
 		
 	}
 
 	@Override
-	public void onActivityList() {
+	public void onActivityList(AdministrationCommand<Activity> i) {
 		
 	}
 
 	@Override
-	public void onLocationAdd(Location a) {
+	public void onLocationAdd(Location a,AdministrationCommand<Location> i) {
 		
 	}
 
 	@Override
-	public void onLocationDel(Location a) {
+	public void onLocationDel(Location a,AdministrationCommand<Location> i) {
 		
 	}
 
 	@Override
-	public void onLocationEdit(Location toEdit, Location editValues) {
+	public void onLocationEdit(Location toEdit, Location editValues,AdministrationCommand<Location> i) {
 		
 	}
 
 	@Override
-	public void onLocationList() {
+	public void onLocationList(AdministrationCommand<Location> i) {
 		
 	}
 
 	@Override
-	public void onCategoryAdd(Category a) {
+	public void onCategoryAdd(Category a,AdministrationCommand<Category> i) {
 		
 	}
 
 	@Override
-	public void onCategoryDel(Category a) {
+	public void onCategoryDel(Category a,AdministrationCommand<Category> i) {
 		
 	}
 
 	@Override
-	public void onCategoryEdit(Category toEdit, Category editValues) {
+	public void onCategoryEdit(Category toEdit, Category editValues,AdministrationCommand<Category> i) {
 		
 	}
 
 	@Override
-	public void onCategoryList() {
+	public void onCategoryList(AdministrationCommand<Category> i) {
 		
 	}
 
-	@Override
-	public void onReply(AdministrationCommand<?> replyCommand) {
-		
-	}
-	
+
 
 }

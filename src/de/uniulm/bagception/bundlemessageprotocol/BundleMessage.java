@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import android.os.Bundle;
+import de.uniulm.bagception.bluetoothservermessengercommunication.messenger.MessengerHelper;
 import de.uniulm.bagception.bundlemessageprotocol.entities.Item;
 
 public class BundleMessage {
@@ -131,6 +132,8 @@ public class BundleMessage {
 		int i=Integer.parseInt(b.getString(MESSAGE_TYPE_EXTRA,"0"));
 		return BUNDLE_MESSAGE.values()[i];
 	}
+	
+	
 	
 	
 	
