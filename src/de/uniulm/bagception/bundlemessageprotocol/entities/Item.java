@@ -92,7 +92,7 @@ public class Item extends Observable{
 			this.imageHash = imageHash;
 		}
 	
-		public void serCategory(Category cat){
+		public void setCategory(Category cat){
 			this.category = cat;
 		}
 		
