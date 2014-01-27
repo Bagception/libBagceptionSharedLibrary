@@ -22,10 +22,11 @@ public class Item extends Observable{
 	private final Category category;
 	private final String visibility;
 	
+	
 	private ArrayList<String> tagIDs;
 	private Bitmap image;
 	private int imageHash=-1;
-	
+	private boolean serializeImage=false;
 	private final boolean isActivityIndependent;
 	private final boolean isImportant;
 	
@@ -43,14 +44,17 @@ public class Item extends Observable{
 			throw new IllegalArgumentException(String.format("Visibility must be a String value of {%s, %s}",Item.VISIBILITY_PRIVATE,Item.VISIBILITY_PUBLIC));
 		}
 		this.visibility = visibility;
-		Collections.sort(tagIDs);
+		if (tagIDs!=null)
+			Collections.sort(tagIDs);
 		this.tagIDs=tagIDs;
 		this.imageHash = imageHash;
 		this.isActivityIndependent = isActivityIndependent;
 		this.isImportant = isImportant;
 		
 	}
-	
+	public void serializeImage(){
+		serializeImage =  true;
+	}
 	public Item(String name,ArrayList<String> tagIDs){
 		this(-1,name,null,Item.VISIBILITY_PUBLIC,tagIDs,0,false, false);
 		
@@ -110,6 +114,10 @@ public class Item extends Observable{
 		JSONObject obj = new JSONObject();
 		obj.put("id", id);
 		obj.put("name", name);
+		if (serializeImage && image != null){
+			obj.put("serializedImage", PictureSerializer.serialize(image));
+		}
+			
 		Category cat = getCategory();
 		if (cat==null){
 			obj.put("category", null);	
@@ -127,9 +135,12 @@ public class Item extends Observable{
 		}
 		
 		JSONArray ar = new JSONArray();
-		for (String id:tagIDs){
-			ar.add(id);
+		if (tagIDs != null){
+			for (String id:tagIDs){
+				ar.add(id);
+			}	
 		}
+		
 		obj.put("tagIDs", ar);
 		
 		obj.put("isActivityIndependent", isActivityIndependent);
@@ -147,14 +158,16 @@ public class Item extends Observable{
 		@SuppressWarnings("unchecked")
 		ArrayList<String> ar = (ArrayList<String>) obj.get("tagIDs");
 		int imageId = Integer.parseInt(obj.get("image").toString());
-		
 		Category c = Category.fromJSON((JSONObject) obj.get("category"));
 		String visibility = (String) obj.get("visibility");
 		boolean isImportant = (Boolean) obj.get("isImportant");
 		boolean isActivityIndependent = (Boolean) obj.get("isActivityIndependent");
 		
 		Item i = new Item(id,name,c,visibility,ar,imageId,isActivityIndependent,isImportant);
-		
+		String serializedImage = obj.get("serializedImage") != null?obj.get("serializedImage").toString():null;
+		if (serializedImage != null){
+			i.setImage(PictureSerializer.deserialize(serializedImage));
+		}
 		return i;
 		
 	}

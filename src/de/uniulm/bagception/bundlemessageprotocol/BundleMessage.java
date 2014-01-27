@@ -23,7 +23,54 @@ public class BundleMessage {
 	}
 	
 	public enum BUNDLE_MESSAGE{
-		NOT_A_BUNDLE_MESSAGE,ITEM_FOUND,ITEM_NOT_FOUND,CONTAINER_STATUS, CONTAINER_STATUS_UPDATE,IMAGE_REQUEST,IMAGE_REPLY,CONTAINER_STATUS_UPDATE_REQUEST;
+		/**
+		 * the received message is not a bundle message
+		 */
+		NOT_A_BUNDLE_MESSAGE,
+		
+		/**
+		 * @deprecated this messagetype is no longer supported, use CONTAINER_STATUS_UPDATE instead
+		 */
+		ITEM_FOUND,
+		
+		/**
+		 * @deprecated this messagetype is no longer supported, use CONTAINER_STATUS_UPDATE instead
+		 */
+		ITEM_NOT_FOUND,
+		
+		/**
+		 * contains information about the container state, itself such as if the rfid reader state
+		 * this feature is currently not implemented
+		 */
+		CONTAINER_STATUS, 
+		
+		/**
+		 * container status updates are idempotent and contain a full snapshot about the system-state, such as items, activity
+		 */
+		CONTAINER_STATUS_UPDATE,
+		
+		/**
+		 * caching mechanism, requests an image for a given hash
+		 */
+		IMAGE_REQUEST,
+		
+		/**
+		 * caching mechanism, contains an image for a given hash
+		 */
+		IMAGE_REPLY,
+		
+		/**
+		 * explicitly request a CONTAINER_STATUS_UPDATE
+		 */
+		CONTAINER_STATUS_UPDATE_REQUEST,
+		
+		/**
+		 * this command is a superset of commands. A command is one of the Operation: {add, delete, edit, list} and has an Entity: {Activity, Item, Location, Category}
+		 * <br>
+		 * If an ADMINISTRATION_COMMAND comes from the client, it is request to do such an operation
+		 * It the command comes from the server, it is the answer if the command was successfull or not. Command request/replys for one operation share the same stream-id  
+		 */
+		ADMINISTRATION_COMMAND;
 	}
 	
 	//Item

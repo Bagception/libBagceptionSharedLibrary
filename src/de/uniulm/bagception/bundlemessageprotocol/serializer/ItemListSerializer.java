@@ -32,8 +32,8 @@ public class ItemListSerializer {
 				
 				Object obj = p.parse(jsonArray.get(i).toString());
 				JSONObject o = (JSONObject)obj;
-				Log.d("debug", obj+"");
-				Log.d("debug", o+"");
+				
+				
 				if (o != null){
 					l.add(Item.fromJSON(o));
 				}

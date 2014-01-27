@@ -69,7 +69,7 @@ public class Location {
 	
 	//serialization
 	
-	public static Location fromJSONObject(JSONObject obj){
+	public static Location fromJSON(JSONObject obj){
 		String name = (String) obj.get("name");
 		Float lng = Float.parseFloat(obj.get("lng").toString());
 		Float lat = Float.parseFloat(obj.get("lat").toString());

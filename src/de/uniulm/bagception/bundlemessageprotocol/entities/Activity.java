@@ -61,7 +61,7 @@ public class Activity {
 			JSONArray arr =(JSONArray)p.parse(obj.get("items").toString());
 			List<Item> items = ItemListSerializer.deserialize(arr);
 			JSONObject o = (JSONObject)p.parse(obj.get("location").toString());
-			Location loc = Location.fromJSONObject(o);
+			Location loc = Location.fromJSON(o);
 			Activity ret = new Activity(name, items,loc);
 			return ret;
 		
