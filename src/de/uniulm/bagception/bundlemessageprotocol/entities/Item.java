@@ -17,83 +17,100 @@ public class Item extends Observable{
 	public static final String VISIBILITY_PUBLIC = "public";
 	public static final String VISIBILITY_PRIVATE = "private";
 	
-	private final int id;
-	private final String name;
-	private final Category category;
-	private final String visibility;
+	int id;
+	String name;
+	boolean isIndependentItem;
+	boolean isActivityIndependent;
+	Category category;
+	String cat;
 	
 	private ArrayList<String> tagIDs;
 	private Bitmap image;
 	private int imageHash=-1;
 	
-	private final boolean isActivityIndependent;
-	private final boolean isImportant;
 	
-	public int getImageHash() {
-		return imageHash;
+	
+	public Item() {
+		
 	}
-	public void setImageHash(int imageHash) {
-		this.imageHash = imageHash;
-	}
-	public Item(int id, String name,Category category, String visibility, ArrayList<String> tagIDs, int imageHash,boolean isActivityIndependent,boolean isImportant){
+	
+	public Item(int id, String name, Category category, ArrayList<String> tagIDs, int imageHash, boolean isActivityIndependent, boolean isImportant){
 		this.id = id;
 		this.name=name;
 		this.category = category;
-		if (! (Item.VISIBILITY_PRIVATE.equals(visibility) || Item.VISIBILITY_PUBLIC.equals(visibility))){
-			throw new IllegalArgumentException(String.format("Visibility must be a String value of {%s, %s}",Item.VISIBILITY_PRIVATE,Item.VISIBILITY_PUBLIC));
-		}
-		this.visibility = visibility;
+
 		Collections.sort(tagIDs);
 		this.tagIDs=tagIDs;
 		this.imageHash = imageHash;
 		this.isActivityIndependent = isActivityIndependent;
-		this.isImportant = isImportant;
+		this.isIndependentItem = isImportant;
+		
+		
+//		if (! (Item.VISIBILITY_PRIVATE.equals(visibility) || Item.VISIBILITY_PUBLIC.equals(visibility))){
+//		throw new IllegalArgumentException(String.format("Visibility must be a String value of {%s, %s}",Item.VISIBILITY_PRIVATE,Item.VISIBILITY_PUBLIC));
+//		}
+//		this.visibility = visibility;
 		
 	}
 	
-	public Item(String name,ArrayList<String> tagIDs){
-		this(-1,name,null,Item.VISIBILITY_PUBLIC,tagIDs,0,false, false);
-		
-	}
-	public boolean isActivityIndependent() {
-		return isActivityIndependent;
-	}
-	public boolean isImportant() {
-		return isImportant;
-	}
-	public Item(String name){
-		this(name,null);
-	}
-	
-	
-	
-	
-	public int getId() {
-		return id;
-	}
-	public Category getCategory() {
-		if (category == null) return Category.NO_CATEGORY;
-		return category;
-	}
-	public String getVisibility() {
-		return visibility;
-	}
-	public Bitmap getImage() {
-		return image;
-	}
-	public void setImage(Bitmap image) {
-		this.image = image;
-		this.setChanged();
-		this.notifyObservers();
 
-	}
-	public String getName() {
-		return name;
-	}
 	
-	public List<String> getIds(){
-		return tagIDs;
-	}
+	//------------------------- setter -------------------------//
+	
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public void setCategory(String category) {
+			this.cat = category;
+		}
+	
+		public void setImage(Bitmap image) {
+			this.image = image;
+			this.setChanged();
+			this.notifyObservers();
+	
+		}
+	
+		public void setImageHash(int imageHash) {
+			this.imageHash = imageHash;
+		}
+	
+	//------------------------- getter -------------------------//
+	
+	
+		public long getId() {
+			return this.id;
+		}
+		
+		public List<String> getIds(){
+			return tagIDs;
+		}
+		
+		public String getName() {
+			return this.name;
+		}
+		
+		public Category getCategory() {
+			return this.category;
+		}
+		
+		public boolean getIndependentItem() {
+			return this.isIndependentItem;
+		}
+		
+		public boolean getContextItem() {
+			return this.isActivityIndependent;
+		}
+		
+		public Bitmap getImage() {
+			return image;
+		}
+		
+		public int getImageHash() {
+			return imageHash;
+		}
+		
 	
 
 	
@@ -117,8 +134,6 @@ public class Item extends Observable{
 			obj.put("category", cat);
 		}
 		
-		obj.put("visibility", visibility);
-		
 		if (image!=null){
 			int hash = PictureSerializer.serialize(image).hashCode();
 			obj.put("image",hash);
@@ -133,7 +148,7 @@ public class Item extends Observable{
 		obj.put("tagIDs", ar);
 		
 		obj.put("isActivityIndependent", isActivityIndependent);
-		obj.put("isImportant", isImportant);
+		obj.put("isImportant", isIndependentItem);
 		                         
    
 
@@ -149,11 +164,11 @@ public class Item extends Observable{
 		int imageId = Integer.parseInt(obj.get("image").toString());
 		
 		Category c = Category.fromJSON((JSONObject) obj.get("category"));
-		String visibility = (String) obj.get("visibility");
+		//String visibility = (String) obj.get("visibility");
 		boolean isImportant = (Boolean) obj.get("isImportant");
 		boolean isActivityIndependent = (Boolean) obj.get("isActivityIndependent");
 		
-		Item i = new Item(id,name,c,visibility,ar,imageId,isActivityIndependent,isImportant);
+		Item i = new Item(id,name,c,ar,imageId,isActivityIndependent,isImportant);
 		
 		return i;
 		
@@ -178,7 +193,6 @@ public class Item extends Observable{
 		}
 		Item oItem = (Item) o;
 		if (!getName().equals(oItem.getName())) return false;
-		if (!getVisibility().equals(oItem.getVisibility())) return false;
 		if (!getCategory().equals(oItem.getCategory())) return false;
 		if (getImageHash() != oItem.getImageHash()) return false;
 		if (getIds().size() != oItem.getIds().size()) return false;
