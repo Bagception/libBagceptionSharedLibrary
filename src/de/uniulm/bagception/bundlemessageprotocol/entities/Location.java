@@ -4,12 +4,16 @@ import org.json.simple.JSONObject;
 
 public class Location {
 
-	public final int id;
-	public final String name;
-	public final Float lat;
-	public final Float lng;
-	public final Integer radius;
-	public final String mac;
+	public int id;
+	public String name;
+	public Float lat;
+	public Float lng;
+	public Integer radius;
+	public String mac;
+	
+	public Location(){
+		
+	}
 
 	public Location(int id, String name, Float lat, Float lng,Integer radius,String mac){
 		this.name = name;
@@ -40,6 +44,10 @@ public class Location {
 	}
 	
 	
+	public void setName(String name){
+		this.name = name;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -58,6 +66,10 @@ public class Location {
 
 	public String getMac() {
 		return mac;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public class NoGPSPositionGivenException extends Exception{

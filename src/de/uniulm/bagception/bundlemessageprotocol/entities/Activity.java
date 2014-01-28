@@ -11,17 +11,40 @@ import de.uniulm.bagception.bundlemessageprotocol.serializer.ItemListSerializer;
 
 public class Activity {
 
-	private final List<Item> itemsForActivity;
-	private final String name;
-	private final Location location;
+	private List<Item> itemsForActivity;
+	private String name;
+	private Location location;
+	private int id;
+	
+	public Activity(){
+		
+	}
+	
 	public Activity(String name,List<Item> itemsForActivity,Location location) {
 		this.name = name;
 		this.itemsForActivity = itemsForActivity;
 		this.location = location;
 	}
 	
+	public Activity(int id, String name, List<Item> itemsForActivity, Location location) {
+		this.id = id;
+		this.name = name;
+		this.itemsForActivity = itemsForActivity;
+		this.location = location;
+	}
 	
-	//get
+	// set
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	// get
+	
+	public int getId() {
+		return id;
+	}
 	
 	public String getName() {
 		return name;
