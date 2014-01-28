@@ -48,6 +48,25 @@ public class Location {
 		this.name = name;
 	}
 	
+	public void setLon(Float lon){
+		this.lng = lon;
+	}
+	
+	public void setLat(Float lat){
+		this.lat = lat;
+	}
+	
+	public void setRadius(int radius){
+		this.radius = radius;
+	}
+	
+	public void setMac(String mac){
+		this.mac = mac;
+	}
+	
+	
+	
+	
 	public String getName() {
 		return name;
 	}

@@ -39,6 +39,10 @@ public class Activity {
 		this.name = name;
 	}
 	
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	
 	
 	// get
 	
