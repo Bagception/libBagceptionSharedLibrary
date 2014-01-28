@@ -19,6 +19,7 @@ public class ItemListSerializer {
 
 		JSONArray ret = new JSONArray();
 		ret.addAll(items);
+		
 		return ret;
 	}
 	
@@ -26,12 +27,16 @@ public class ItemListSerializer {
 
 		
 		ArrayList<Item> l = new ArrayList<Item>();
+		if (jsonArray == null) return l;
+		
 		JSONParser p = new JSONParser();
 		for (int i=0;i<jsonArray.size();i++){
 			try {
 				
-				Object obj = p.parse(jsonArray.get(i).toString());
-				JSONObject o = (JSONObject)obj;
+				Object obj = jsonArray.get(i);
+				if (obj == null) continue;
+				JSONObject o = (JSONObject) p.parse(obj.toString());
+				
 				
 				
 				if (o != null){

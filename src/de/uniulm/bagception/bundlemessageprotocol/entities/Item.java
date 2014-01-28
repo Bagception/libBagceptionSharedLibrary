@@ -228,18 +228,34 @@ public class Item extends Observable{
 			
 		}
 		Item oItem = (Item) o;
-		if (!getName().equals(oItem.getName())) return false;
-		if (!getCategory().equals(oItem.getCategory())) return false;
-		if (getImageHash() != oItem.getImageHash()) return false;
-		if (getIds().size() != oItem.getIds().size()) return false;
-		
-		
-		for(int i=0;i<getIds().size();i++){
-			if (!getIds().get(i).equals(oItem.getIds().get(i))){
+		if (name != null){
+			if (!getName().equals(oItem.getName())) return false;
+		}else{
+			if (oItem.getName() != null){
 				return false;
 			}
 		}
 		
+		if (category != null){
+			if (!getCategory().equals(oItem.getCategory())) return false;
+		}else{
+			if (oItem.getCategory() != null){
+				return false;
+			}
+		}
+		
+		if (getImageHash() != oItem.getImageHash()) return false;
+		if (getIds().size() != oItem.getIds().size()) return false;
+		
+		if (getIds() != null){
+			for(int i=0;i<getIds().size();i++){
+				if (!getIds().get(i).equals(oItem.getIds().get(i))){
+					return false;
+				}
+			}
+		}else{
+			if (oItem.getIds() != null) return false;
+		}
 		return true;
 	} 
 }
