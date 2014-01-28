@@ -35,7 +35,7 @@ public class BundleMessage {
 		ITEM_FOUND,
 		
 		/**
-		 * @deprecated this messagetype is no longer supported, use CONTAINER_STATUS_UPDATE instead
+		 * if an item id is not found in the database 
 		 */
 		ITEM_NOT_FOUND,
 		
