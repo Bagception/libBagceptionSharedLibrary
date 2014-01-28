@@ -7,8 +7,12 @@ public class Category {
 
 	public static Category NO_CATEGORY = new Category(0, "uncategorized");
 	
-	public final int id;
-	public final String name;
+	public int id;
+	public String name;
+	
+	public Category(){
+		
+	}
 	
 	public Category(int id, String name){
 		this.id = id;
@@ -25,6 +29,14 @@ public class Category {
 
 	public String getName() {
 		return name;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public static Category fromJSON(JSONObject json){
