@@ -1,6 +1,7 @@
 package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
@@ -14,7 +15,7 @@ import de.uniulm.bagception.bundlemessageprotocol.serializer.PictureSerializer;
 
 public class Item extends Observable{
 
-	private final long id;
+	private long id;
 	private final String name;
 	private final boolean isIndependentItem;
 	private final boolean isActivityIndependent;
@@ -28,12 +29,58 @@ public class Item extends Observable{
 	private boolean serializeImage=false;
 	
 	
+	
+	public Item(String name){
+		this(name,new ArrayList<String>());
+	}
+	
+	public Item(String name, Category category) {
+		this(name,category,new ArrayList<String>());
+	}
+	
+	
 	public Item(String name,ArrayList<String> ids){
-		this(-1,name,null,ids,0,false,false,null);
+		this(name,null,ids);
+	}
+
+	public Item(String name,String... ids){
+		this(name,null,ids);
+	}
+
+	public Item(String name, Category category, ArrayList<String> tagIDs){
+		this(-1, name, category, 0, false, false, null,tagIDs);
+	}
+	
+	public Item(String name, Category category, String... tagIDs){
+		this(-1, name, category, 0, false, false, null,tagIDs);
+	}
+	
+	public Item(int id, String name, Category category, ArrayList<String> tagIDs){
+		this(id, name, category, 0, false, false, null, tagIDs);
+	}
+	
+	public Item(int id, String name, Category category, String... tagIDs){
+		this(id, name, category, 0, false, false, null,tagIDs);
+	}
+		
+	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes) {
+		this(id, name,category, imageHash, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>());
+	}
+	
+	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,final String... tagIDs) {
+		this(id, name,category, imageHash, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>(){
+			private static final long serialVersionUID = 5211017474038101151L;
+
+		{
+			for(String s:tagIDs){
+				add(s);
+			}
+		}});
+		
 	}
 
 	
-	public Item(int id, String name, Category category, ArrayList<String> tagIDs, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes) {
+	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,ArrayList<String> tagIDs) {
 		this.id = id;
 		this.name=name;
 		this.category = category;
@@ -42,6 +89,9 @@ public class Item extends Observable{
 			Collections.sort(tagIDs);
 
 		Collections.sort(tagIDs);
+		if (tagIDs == null){
+			tagIDs = new ArrayList<String>();
+		}
 		this.tagIDs=tagIDs;
 		this.imageHash = imageHash;
 		this.isActivityIndependent = isActivityIndependent;
@@ -185,7 +235,7 @@ public class Item extends Observable{
 		
 		
 		String serializedImage = obj.get("serializedImage") != null?obj.get("serializedImage").toString():null;
-		Item i = new Item(id,name,c,ar,imageId,isActivityIndependent,isImportant,a);
+		Item i = new Item(id,name,c,imageId,isActivityIndependent,isImportant,a,ar);
 		if (serializedImage != null){
 			i.setImage(PictureSerializer.deserialize(serializedImage));
 		}
