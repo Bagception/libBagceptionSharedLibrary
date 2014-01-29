@@ -7,7 +7,7 @@ public class Category {
 
 	public static Category NO_CATEGORY = new Category(0, "uncategorized");
 	
-	public int id;
+	public long id;
 	public String name;
 	
 	public Category(){
@@ -23,7 +23,7 @@ public class Category {
 		this(-1,name);
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

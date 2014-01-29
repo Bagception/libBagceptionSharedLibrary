@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 public class Location {
 
-	public int id;
+	public long id;
 	public String name;
 	public Float lat;
 	public Float lng;
@@ -15,7 +15,7 @@ public class Location {
 		
 	}
 
-	public Location(int id, String name, Float lat, Float lng,Integer radius,String mac){
+	public Location(long id, String name, Float lat, Float lng,Integer radius,String mac){
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
@@ -87,7 +87,7 @@ public class Location {
 		return mac;
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -106,7 +106,7 @@ public class Location {
 		Float lat = Float.parseFloat(obj.get("lat").toString());
 		Integer rad = Integer.parseInt(obj.get("rad").toString());
 		String mac = (String) obj.get("mac");
-		Integer id = Integer.parseInt(obj.get("id").toString());
+		Long id = Long.parseLong(obj.get("id").toString());
 		return new Location(id,name, lat, lng, rad, mac);
 	}
 	
