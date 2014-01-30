@@ -31,7 +31,7 @@ public class Item extends Observable{
 	
 	
 	public Item(String name){
-		this(name,new ArrayList<String>());
+		this(name, new ArrayList<String>());
 	}
 	
 	public Item(String name, Category category) {
@@ -46,7 +46,7 @@ public class Item extends Observable{
 	public Item(String name,String... ids){
 		this(name,null,ids);
 	}
-
+	
 	public Item(String name, Category category, ArrayList<String> tagIDs){
 		this(-1, name, category, 0, false, false, null,tagIDs);
 	}
@@ -55,19 +55,19 @@ public class Item extends Observable{
 		this(-1, name, category, 0, false, false, null,tagIDs);
 	}
 	
-	public Item(int id, String name, Category category, ArrayList<String> tagIDs){
+	public Item(long id, String name, Category category, ArrayList<String> tagIDs){
 		this(id, name, category, 0, false, false, null, tagIDs);
 	}
 	
-	public Item(int id, String name, Category category, String... tagIDs){
+	public Item(long id, String name, Category category, String... tagIDs){
 		this(id, name, category, 0, false, false, null,tagIDs);
 	}
 		
-	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes) {
+	public Item(long id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes) {
 		this(id, name,category, imageHash, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>());
 	}
 	
-	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,final String... tagIDs) {
+	public Item(long id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,final String... tagIDs) {
 		this(id, name,category, imageHash, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>(){
 			private static final long serialVersionUID = 5211017474038101151L;
 
@@ -80,7 +80,7 @@ public class Item extends Observable{
 	}
 
 	
-	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,ArrayList<String> tagIDs) {
+	public Item(long id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,ArrayList<String> tagIDs) {
 		this.id = id;
 		this.name=name;
 		this.category = category;
