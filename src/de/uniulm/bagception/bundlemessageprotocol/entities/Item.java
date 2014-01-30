@@ -1,7 +1,6 @@
 package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
@@ -88,7 +87,7 @@ public class Item extends Observable{
 		if (tagIDs!=null)
 			Collections.sort(tagIDs);
 
-		Collections.sort(tagIDs);
+		
 		if (tagIDs == null){
 			tagIDs = new ArrayList<String>();
 		}
@@ -171,6 +170,7 @@ public class Item extends Observable{
 		JSONObject obj = new JSONObject();
 		obj.put("id", id);
 		obj.put("name", name);
+		
 		if (serializeImage && image != null){
 			obj.put("serializedImage", PictureSerializer.serialize(image));
 		}
@@ -193,15 +193,19 @@ public class Item extends Observable{
 		if (tagIDs != null){
 			for (String id:tagIDs){
 				ar.add(id);
-			}	
+			}
+			obj.put("tagIDs", ar);
+		}else{
+			obj.put("tagIDs", null);
 		}
 		
-		obj.put("tagIDs", ar);
+		
 		
 		obj.put("isActivityIndependent", isActivityIndependent);
 		obj.put("isImportant", isIndependentItem);
 		                         
 		ItemAttribute attribute = getAttribute();
+		
 		if(attribute == null){
 			obj.put("attribute", null);
 		} else{
