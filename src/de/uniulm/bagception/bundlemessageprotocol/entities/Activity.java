@@ -14,7 +14,7 @@ public class Activity {
 	private List<Item> itemsForActivity;
 	private String name;
 	private Location location;
-	private int id;
+	private long id;
 	
 	public Activity(){
 		
@@ -26,7 +26,7 @@ public class Activity {
 		this.location = location;
 	}
 	
-	public Activity(int id, String name, List<Item> itemsForActivity, Location location) {
+	public Activity(long id, String name, List<Item> itemsForActivity, Location location) {
 		this.id = id;
 		this.name = name;
 		this.itemsForActivity = itemsForActivity;
@@ -46,7 +46,7 @@ public class Activity {
 	
 	// get
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	

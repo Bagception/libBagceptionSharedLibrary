@@ -14,53 +14,89 @@ import de.uniulm.bagception.bundlemessageprotocol.serializer.PictureSerializer;
 
 public class Item extends Observable{
 
-	public static final String VISIBILITY_PUBLIC = "public";
-	public static final String VISIBILITY_PRIVATE = "private";
-	
-	int id;
-	String name;
-	boolean isIndependentItem;
-	boolean isActivityIndependent;
-	Category category;
+	private long id;
+	private final String name;
+	private final boolean isIndependentItem;
+	private final boolean isActivityIndependent;
+	private final Category category;
+	private final ItemAttribute attributes;
 	
 	
-	private ArrayList<String> tagIDs;
+	private final ArrayList<String> tagIDs;
 	private Bitmap image;
-	private int imageHash=-1;
+	private int imageHash = -1;
 	private boolean serializeImage=false;
-	private boolean isImportant;
 	
-	public Item(){
-		
+	
+	
+	public Item(String name){
+		this(name,new ArrayList<String>());
 	}
 	
+	public Item(String name, Category category) {
+		this(name,category,new ArrayList<String>());
+	}
+	
+	
 	public Item(String name,ArrayList<String> ids){
-		this(-1,name,null,ids,0,false,false);
+		this(name,null,ids);
+	}
+
+	public Item(String name,String... ids){
+		this(name,null,ids);
+	}
+
+	public Item(String name, Category category, ArrayList<String> tagIDs){
+		this(-1, name, category, 0, false, false, null,tagIDs);
+	}
+	
+	public Item(String name, Category category, String... tagIDs){
+		this(-1, name, category, 0, false, false, null,tagIDs);
+	}
+	
+	public Item(int id, String name, Category category, ArrayList<String> tagIDs){
+		this(id, name, category, 0, false, false, null, tagIDs);
+	}
+	
+	public Item(int id, String name, Category category, String... tagIDs){
+		this(id, name, category, 0, false, false, null,tagIDs);
+	}
+		
+	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes) {
+		this(id, name,category, imageHash, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>());
+	}
+	
+	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,final String... tagIDs) {
+		this(id, name,category, imageHash, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>(){
+			private static final long serialVersionUID = 5211017474038101151L;
+
+		{
+			for(String s:tagIDs){
+				add(s);
+			}
+		}});
+		
 	}
 
 	
-	public Item(int id, String name, Category category, ArrayList<String> tagIDs, int imageHash, boolean isActivityIndependent, boolean isImportant){
+	public Item(int id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,ArrayList<String> tagIDs) {
 		this.id = id;
 		this.name=name;
 		this.category = category;
-//		if (! (Item.VISIBILITY_PRIVATE.equals(visibility) || Item.VISIBILITY_PUBLIC.equals(visibility))){
-//			throw new IllegalArgumentException(String.format("Visibility must be a String value of {%s, %s}",Item.VISIBILITY_PRIVATE,Item.VISIBILITY_PUBLIC));
-//		}
-		//this.visibility = visibility;
+
 		if (tagIDs!=null)
 			Collections.sort(tagIDs);
 
-		Collections.sort(tagIDs);
+		
+		if (tagIDs == null){
+			tagIDs = new ArrayList<String>();
+		}
 		this.tagIDs=tagIDs;
 		this.imageHash = imageHash;
 		this.isActivityIndependent = isActivityIndependent;
-		this.isIndependentItem = isImportant;
+		this.isIndependentItem = isIndependentItem;
+		this.attributes = attributes;
 		
-		
-//		if (! (Item.VISIBILITY_PRIVATE.equals(visibility) || Item.VISIBILITY_PUBLIC.equals(visibility))){
-//		throw new IllegalArgumentException(String.format("Visibility must be a String value of {%s, %s}",Item.VISIBILITY_PRIVATE,Item.VISIBILITY_PUBLIC));
-//		}
-//		this.visibility = visibility;
 		
 	}
 	public void serializeImage(){
@@ -71,31 +107,14 @@ public class Item extends Observable{
 //	}
 
 	
-	//------------------------- setter -------------------------//
 	
-		public void setName(String name) {
-			this.name = name;
-		}
-		
-//		public void setCategory(String category) {
-//			this.cat = category;
-//		}
+	public void setImage(Bitmap image) {
+        this.image = image;
+        this.setChanged();
+        this.notifyObservers();
+
+	}
 	
-		public void setImage(Bitmap image) {
-			this.image = image;
-			this.setChanged();
-			this.notifyObservers();
-	
-		}
-	
-		public void setImageHash(int imageHash) {
-			this.imageHash = imageHash;
-		}
-	
-		public void setCategory(Category cat){
-			this.category = cat;
-		}
-		
 	//------------------------- getter -------------------------//
 	
 	
@@ -131,6 +150,10 @@ public class Item extends Observable{
 			return imageHash;
 		}
 		
+		public ItemAttribute getAttribute() {
+			return this.attributes;
+		}
+		
 	
 
 	
@@ -147,6 +170,7 @@ public class Item extends Observable{
 		JSONObject obj = new JSONObject();
 		obj.put("id", id);
 		obj.put("name", name);
+		
 		if (serializeImage && image != null){
 			obj.put("serializedImage", PictureSerializer.serialize(image));
 		}
@@ -169,14 +193,24 @@ public class Item extends Observable{
 		if (tagIDs != null){
 			for (String id:tagIDs){
 				ar.add(id);
-			}	
+			}
+			obj.put("tagIDs", ar);
+		}else{
+			obj.put("tagIDs", null);
 		}
 		
-		obj.put("tagIDs", ar);
+		
 		
 		obj.put("isActivityIndependent", isActivityIndependent);
 		obj.put("isImportant", isIndependentItem);
 		                         
+		ItemAttribute attribute = getAttribute();
+		
+		if(attribute == null){
+			obj.put("attribute", null);
+		} else{
+			obj.put("attribute", attribute);
+		}
    
 
 		return obj;
@@ -194,13 +228,18 @@ public class Item extends Observable{
 		if (catObjJson != null){
 			c = Category.fromJSON(catObjJson);
 		}
-		//String visibility = (String) obj.get("visibility");
 		boolean isImportant = (Boolean) obj.get("isImportant");
 		boolean isActivityIndependent = (Boolean) obj.get("isActivityIndependent");
 		
-//		Item i = new Item(id,name,c,visibility,ar,imageId,isActivityIndependent,isImportant);
+		JSONObject attrObjJson = (JSONObject) obj.get("attribute");
+		ItemAttribute a = null;
+		if(attrObjJson != null){
+			a = ItemAttribute.fromJSON(attrObjJson);
+		}
+		
+		
 		String serializedImage = obj.get("serializedImage") != null?obj.get("serializedImage").toString():null;
-		Item i = new Item(id,name,c,ar,imageId,isActivityIndependent,isImportant);
+		Item i = new Item(id,name,c,imageId,isActivityIndependent,isImportant,a,ar);
 		if (serializedImage != null){
 			i.setImage(PictureSerializer.deserialize(serializedImage));
 		}
