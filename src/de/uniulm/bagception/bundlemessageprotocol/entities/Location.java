@@ -118,6 +118,7 @@ public class Location {
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSONObject(){
 		JSONObject ret = new JSONObject();
+		ret.put("name", name);
 		ret.put("lat", lat);
 		ret.put("lng", lng);
 		ret.put("rad", radius);
