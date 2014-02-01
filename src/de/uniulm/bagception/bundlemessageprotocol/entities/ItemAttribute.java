@@ -10,6 +10,13 @@ public class ItemAttribute {
 	private final String lightness;
 	
 	
+	public ItemAttribute(String temperature, String weather, String lightness) {
+		item_id = -1;
+		this.temperature = temperature;
+		this.weather = weather;
+		this.lightness = lightness;
+	}
+	
 	public ItemAttribute(long item_id, String temperature, String weather, String lightness) {
 		
 		this.item_id = item_id;
