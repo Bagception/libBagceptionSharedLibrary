@@ -1,5 +1,6 @@
 package de.uniulm.bagception.bundlemessageprotocol.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -11,16 +12,27 @@ import de.uniulm.bagception.bundlemessageprotocol.serializer.ItemListSerializer;
 
 public class Activity {
 
-	private List<Item> itemsForActivity;
-	private String name;
-	private Location location;
-	private long id;
+	private final List<Item> itemsForActivity;
+	private final String name;
+	private final Location location;
+	private final long id;
 	
-	public Activity(){
-		
+	
+	public Activity(String name){
+		this(name, new ArrayList<Item>());
+	}
+	
+
+	public Activity(String name, Location location) {
+		this(name, new ArrayList<Item>(), location);
+	}
+	
+	public Activity(String name, List<Item> itemsForActivity) {
+		this(name, new ArrayList<Item>(), null);
 	}
 	
 	public Activity(String name,List<Item> itemsForActivity,Location location) {
+		id = -1;
 		this.name = name;
 		this.itemsForActivity = itemsForActivity;
 		this.location = location;
@@ -30,16 +42,6 @@ public class Activity {
 		this.id = id;
 		this.name = name;
 		this.itemsForActivity = itemsForActivity;
-		this.location = location;
-	}
-	
-	// set
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void setLocation(Location location) {
 		this.location = location;
 	}
 	

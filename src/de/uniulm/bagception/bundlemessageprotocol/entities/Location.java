@@ -4,17 +4,32 @@ import org.json.simple.JSONObject;
 
 public class Location {
 
-	public long id;
-	public String name;
-	public Float lat;
-	public Float lng;
-	public Integer radius;
-	public String mac;
+	private final long id;
+	private final String name;
+	private final float lat;
+	private final float lng;
+	private final Integer radius;
+	private final String mac;
 	
-	public Location(){
-		
+	
+	public Location(String name, String mac){
+		id = -1;
+		this.name = name;
+		lat = (float) 0;
+		lng = (float) 0;
+		radius = -1;
+		this.mac = mac;
 	}
-
+	
+	public Location(String name, Float lat, Float lng, Integer radius){
+		id = -1;
+		this.name = name;
+		this.lat = lat;
+		this.lng = lng;
+		this.radius = radius;
+		mac = null;
+	}
+	
 	public Location(long id, String name, Float lat, Float lng,Integer radius,String mac){
 		this.name = name;
 		this.lat = lat;
@@ -32,7 +47,7 @@ public class Location {
 	 */
 	public boolean isIn(float lat, float lng) throws NoGPSPositionGivenException{
 		 
-		if (this.lat == null || this.lng == 0){
+		if (this.lat == 0 || this.lng == 0){
 			throw new NoGPSPositionGivenException();
 		}
 		
@@ -42,28 +57,6 @@ public class Location {
 		
 		return false;
 	}
-	
-	
-	public void setName(String name){
-		this.name = name;
-	}
-	
-	public void setLon(Float lon){
-		this.lng = lon;
-	}
-	
-	public void setLat(Float lat){
-		this.lat = lat;
-	}
-	
-	public void setRadius(int radius){
-		this.radius = radius;
-	}
-	
-	public void setMac(String mac){
-		this.mac = mac;
-	}
-	
 	
 	
 	
