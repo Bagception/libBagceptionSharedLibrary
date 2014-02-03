@@ -30,6 +30,15 @@ public class Location {
 		mac = null;
 	}
 	
+	public Location(String name, Float lat, Float lng, Integer radius, String mac){
+		id = -1;
+		this.name = name;
+		this.lat = lat;
+		this.lng = lng;
+		this.radius = radius;
+		this.mac = mac;
+	}
+	
 	public Location(long id, String name, Float lat, Float lng,Integer radius,String mac){
 		this.name = name;
 		this.lat = lat;
