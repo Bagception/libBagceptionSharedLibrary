@@ -75,22 +75,76 @@ public class Activity {
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSONObject(){
 		JSONObject ret = new JSONObject();
-		ret.put("name", name);
-		ret.put("items", ItemListSerializer.serialize(itemsForActivity));
-		ret.put("location", location.toJSONObject());
+		
+		if (name == null){
+			ret.put("name", null);
+		}else{
+			ret.put("name", name);
+		}
+		if (itemsForActivity == null){
+			ret.put("items", null);
+		}else{
+			ret.put("items", ItemListSerializer.serialize(itemsForActivity));	
+		}
+		if (location == null){
+			ret.put("location", null);
+		}else{
+			ret.put("location",location.toJSONObject());	
+		}
+		
+		
 		return ret;
 	}
 	
 	public static Activity fromJSON(JSONObject obj){
 		String name;
 		JSONParser p = new JSONParser();
+		List<Item> items;
+		Location loc;
 		try {
-			name = obj.get("name").toString();
+			{
+				Object n = obj.get("name");
+				if (n==null){
+					name = "";
+				}else{
+					name = n.toString();
+				}
+			}
 			
-			JSONArray arr =(JSONArray)p.parse(obj.get("items").toString());
-			List<Item> items = ItemListSerializer.deserialize(arr);
-			JSONObject o = (JSONObject)p.parse(obj.get("location").toString());
-			Location loc = Location.fromJSON(o);
+			{
+				Object n = obj.get("items");
+				JSONArray arr;
+				
+				if (n==null){
+					items = null;
+				}else{
+					arr = (JSONArray)p.parse(n.toString());
+					if (arr != null){
+						items = ItemListSerializer.deserialize(arr);						
+					}else{
+						items = null;
+					}
+					
+				}
+			}
+			
+			{
+				Object n = obj.get("location");
+				JSONObject lOb;
+				if (n==null){
+					loc = null;
+				}else{
+					lOb = (JSONObject)p.parse(n.toString());
+					if (lOb != null){
+						loc = Location.fromJSON(lOb);						
+					}else{
+						loc = null;
+					}
+					
+				}
+			}
+			
+			
 			Activity ret = new Activity(name, items,loc);
 			return ret;
 		
