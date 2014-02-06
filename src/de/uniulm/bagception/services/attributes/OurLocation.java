@@ -9,7 +9,9 @@ public class OurLocation {
 	public static final String LOCATION_ACCURACY_THRESHOLD = "locationAccuracyThreshold";
 	public static final String REQUEST_TYPE = "requestType";
 	public static final String RESPONSE_TYPE = "responseType";
+	public static final String GETLOCATION = "getLocation";
 	public static final String LOCATION = "location";
+	
 	public static final String RESOLVE_ADDRESS = "resolveAddress";
 	
 	public static final String NETWORK = "network";
