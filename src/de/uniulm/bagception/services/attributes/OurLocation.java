@@ -18,4 +18,8 @@ public class OurLocation {
 	public static final String GPS = "gps";
 	public static final String BLUETOOTH = "bluetooth";
 	public static final String NONE = "none";
+	
+	public static final String ADDRESS = "address";
+	public static final String MAC = "mac";
+	
 }
