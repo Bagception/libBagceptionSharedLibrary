@@ -19,9 +19,12 @@ public class ContainerStateUpdate {
 	private final List<Item> itemList;
 	private final Activity activity;
 
-	public ContainerStateUpdate(Activity activity, List<Item> itemsInContainer) {
+	private final int batteryState;
+	
+	public ContainerStateUpdate(Activity activity, List<Item> itemsInContainer,int batteryState) {
 		this.itemList = itemsInContainer;
 		this.activity = activity;
+		this.batteryState = batteryState;
 	}
 
 	// get
@@ -34,6 +37,9 @@ public class ContainerStateUpdate {
 		return activity;
 	}
 
+	public int getBatteryState(){
+		return batteryState;
+	}
 	// Serializing
 
 	@Override
@@ -46,6 +52,7 @@ public class ContainerStateUpdate {
 	public JSONObject toJSONObject() {
 		JSONObject ret = new JSONObject();
 		ret.put("activity", activity.toJSONObject());
+		ret.put("batteryState", batteryState);
 		ret.put("itemList", ItemListSerializer.serialize(itemList));
 		LOG.out(this, ret.toJSONString());
 		return ret;
@@ -62,8 +69,9 @@ public class ContainerStateUpdate {
 			JSONArray arr;
 			arr = (JSONArray) p.parse(obj.get("itemList").toString());
 			List<Item> itemList = ItemListSerializer.deserialize(arr);
+			int battery = Integer.parseInt(obj.get("batteryState").toString()); 
 			ContainerStateUpdate ret = new ContainerStateUpdate(activity,
-					itemList);
+					itemList,battery);
 			return ret;
 		} catch (ParseException e) {
 			e.printStackTrace();
