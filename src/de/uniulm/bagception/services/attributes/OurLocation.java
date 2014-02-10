@@ -123,4 +123,16 @@ public class OurLocation {
 	 * Defines the mac address of a resolved location request.
 	 */
 	public static final String MAC = "mac";
+	
+	
+	
+	public static final String GETWIFIAPS = "getWifiAps";
+	
+	
+	
+	public static final String GETBLUETOOTHDEVICES = "getBluetoothDevices";
+	
+	
+	public static final String NAME = "name";
+
 }

@@ -127,6 +127,5 @@ public class Location {
 		ret.put("mac", mac);
 		ret.put("id", id);
 		return ret;
-		
 	}
 }

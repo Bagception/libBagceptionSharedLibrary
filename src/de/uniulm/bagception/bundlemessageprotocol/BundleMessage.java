@@ -66,6 +66,26 @@ public class BundleMessage {
 		CONTAINER_STATUS_UPDATE_REQUEST,
 		
 		/**
+		 * requests a wifi accesspoint inquiry
+		 */
+		WIFI_SEARCH_REQUEST,
+		
+		/**
+		 * contains the name and mac of a found wifi accesspoint
+		 */
+		WIFI_SEARCH_REPLY,
+		
+		/**
+		 * requests a bluetooth device inquiry
+		 */
+		BLUETOOTH_SEARCH_REQUEST,
+		
+		/**
+		 * contains the name and mac of a found bluetooth device
+		 */
+		BLUETOOTH_SEARCH_REPLY,
+		
+		/**
 		 * this command is a superset of commands. A command is one of the Operation: {add, delete, edit, list} and has an Entity: {Activity, Item, Location, Category}
 		 * <br>
 		 * If an ADMINISTRATION_COMMAND comes from the client, it is request to do such an operation
