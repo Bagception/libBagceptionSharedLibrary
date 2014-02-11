@@ -1,5 +1,6 @@
 package de.uniulm.bagception.bundlemessageprotocol.entities;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,7 +10,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import android.graphics.Bitmap;
-import de.uniulm.bagception.bundlemessageprotocol.serializer.PictureSerializer;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 
 public class Item extends Observable{
@@ -23,8 +25,8 @@ public class Item extends Observable{
 	
 	
 	private final ArrayList<String> tagIDs;
-	private Bitmap image;
-	private int imageHash = -1;
+	//private Bitmap image;
+	private String imageString;
 	private boolean serializeImage=false;
 	
 	
@@ -47,27 +49,27 @@ public class Item extends Observable{
 	}
 	
 	public Item(String name, Category category, ArrayList<String> tagIDs){
-		this(-1, name, category, 0, false, false, null,tagIDs);
+		this(-1, name, category, false, false, null,tagIDs);
 	}
 	
 	public Item(String name, Category category, String... tagIDs){
-		this(-1, name, category, 0, false, false, null,tagIDs);
+		this(-1, name, category, false, false, null,tagIDs);
 	}
 	
 	public Item(long id, String name, Category category, ArrayList<String> tagIDs){
-		this(id, name, category, 0, false, false, null, tagIDs);
+		this(id, name, category, false, false, null, tagIDs);
 	}
 	
 	public Item(long id, String name, Category category, String... tagIDs){
-		this(id, name, category, 0, false, false, null,tagIDs);
+		this(id, name, category, false, false, null,tagIDs);
 	}
 		
-	public Item(long id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes) {
-		this(id, name,category, imageHash, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>());
+	public Item(long id, String name, Category category, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes) {
+		this(id, name,category, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>());
 	}
 	
-	public Item(long id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,final String... tagIDs) {
-		this(id, name,category, imageHash, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>(){
+	public Item(long id, String name, Category category, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,final String... tagIDs) {
+		this(id, name,category, isActivityIndependent, isIndependentItem,attributes,new ArrayList<String>(){
 			private static final long serialVersionUID = 5211017474038101151L;
 
 		{
@@ -79,7 +81,7 @@ public class Item extends Observable{
 	}
 
 	
-	public Item(long id, String name, Category category, int imageHash, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,ArrayList<String> tagIDs) {
+	public Item(long id, String name, Category category, boolean isActivityIndependent, boolean isIndependentItem, ItemAttribute attributes,ArrayList<String> tagIDs) {
 		this.id = id;
 		this.name=name;
 		this.category = category;
@@ -92,7 +94,6 @@ public class Item extends Observable{
 			tagIDs = new ArrayList<String>();
 		}
 		this.tagIDs=tagIDs;
-		this.imageHash = imageHash;
 		this.isActivityIndependent = isActivityIndependent;
 		this.isIndependentItem = isIndependentItem;
 		this.attributes = attributes;
@@ -107,12 +108,20 @@ public class Item extends Observable{
 //	}
 
 	
+	public String getImageString(){
+		return imageString;
+	}
 	
-	public void setImage(Bitmap image) {
-        this.image = image;
+	
+	public void setImageString(String imageString) {
+        this.imageString = imageString;
         this.setChanged();
         this.notifyObservers();
 
+	}
+	
+	public void setImage(Bitmap image){
+		setImageString(serialize(image));
 	}
 	
 	//------------------------- getter -------------------------//
@@ -143,11 +152,12 @@ public class Item extends Observable{
 		}
 		
 		public Bitmap getImage() {
-			return image;
+			if (imageString == null) return null;
+			return deserialize(imageString);
 		}
 		
-		public int getImageHash() {
-			return imageHash;
+		public long getImageHash() {
+			return id;
 		}
 		
 		public ItemAttribute getAttribute() {
@@ -171,8 +181,8 @@ public class Item extends Observable{
 		obj.put("id", id);
 		obj.put("name", name);
 		
-		if (serializeImage && image != null){
-			obj.put("serializedImage", PictureSerializer.serialize(image));
+		if (serializeImage && imageString != null){
+			obj.put("serializedImage", imageString);
 		}
 			
 		Category cat = getCategory();
@@ -182,8 +192,8 @@ public class Item extends Observable{
 			obj.put("category", cat);
 		}
 		
-		if (image!=null){
-			int hash = PictureSerializer.serialize(image).hashCode();
+		if (imageString!=null){
+			long hash = id;
 			obj.put("image",hash);
 		}else{
 			obj.put("image","0");
@@ -217,12 +227,11 @@ public class Item extends Observable{
 	}
 	
 	public static Item fromJSON(JSONObject obj){
-		int id = Integer.parseInt(obj.get("id").toString());
+		long id = Long.parseLong(obj.get("id").toString());
 		
 		String name = (String) obj.get("name");
 		@SuppressWarnings("unchecked")
 		ArrayList<String> ar = (ArrayList<String>) obj.get("tagIDs");
-		int imageId = Integer.parseInt(obj.get("image").toString());
 		JSONObject catObjJson = (JSONObject) obj.get("category");
 		Category c=null;
 		if (catObjJson != null){
@@ -239,9 +248,9 @@ public class Item extends Observable{
 		
 		
 		String serializedImage = obj.get("serializedImage") != null?obj.get("serializedImage").toString():null;
-		Item i = new Item(id,name,c,imageId,isActivityIndependent,isImportant,a,ar);
+		Item i = new Item(id,name,c,isActivityIndependent,isImportant,a,ar);
 		if (serializedImage != null){
-			i.setImage(PictureSerializer.deserialize(serializedImage));
+			i.setImageString(serializedImage);
 		}
 		
 		
@@ -297,4 +306,23 @@ public class Item extends Observable{
 		}
 		return true;
 	} 
+	
+	public static String serialize(Bitmap picture){
+	
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+		byte[] byteArray = stream.toByteArray();
+		
+		String enc=Base64.encodeToString(byteArray, Base64.DEFAULT);
+		
+		return enc;
+	}
+	
+	public static Bitmap deserialize(String s){
+		byte[] bytes = Base64.decode(s, Base64.DEFAULT);
+		Bitmap bmp;
+		
+		bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+		return bmp;
+	}
 }
