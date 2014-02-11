@@ -64,5 +64,11 @@ public class WeatherForecast {
 	 */
 	public static final String CLOUDS = "clouds";
 	
+	public static final String REQUEST_TYPE = "requestType";
+	
+	public static final String RESPONSE_TYPE = "responseType";
+	
+	public static final String WEATHERFORECAST = "weatherForecast";
+	
 
 }
