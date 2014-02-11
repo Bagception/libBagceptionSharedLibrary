@@ -86,6 +86,16 @@ public class BundleMessage {
 		BLUETOOTH_SEARCH_REPLY,
 		
 		/**
+		 * requests a weather forecast for a given latitude longitude position
+		 */
+		WEATHERFORECAST_REQUEST,
+		
+		/**
+		 * contains the weather forecast for a given latitude longitude position
+		 */
+		WEATHERFORECAST_REPLY,
+		
+		/**
 		 * this command is a superset of commands. A command is one of the Operation: {add, delete, edit, list} and has an Entity: {Activity, Item, Location, Category}
 		 * <br>
 		 * If an ADMINISTRATION_COMMAND comes from the client, it is request to do such an operation
