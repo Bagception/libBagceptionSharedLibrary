@@ -64,6 +64,7 @@ public enum StatusCode {
 	public class EXTRA_KEYS{
 		public static final String ERROR_MESSAGE = EXTRA_STATUSCODE+"error";
 		public static final String CONNECTED_DEVICE_NAME = EXTRA_STATUSCODE+"connectedDeviceName";
+		public static final String CONNECTION_CHANGED = EXTRA_STATUSCODE+"connchanged";
 	}
 	
 	
