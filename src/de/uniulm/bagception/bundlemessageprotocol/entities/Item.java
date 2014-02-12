@@ -192,13 +192,10 @@ public class Item extends Observable{
 			obj.put("category", cat);
 		}
 		
-		if (imageString!=null){
-			long hash = id;
-			obj.put("image",hash);
-		}else{
-			obj.put("image","0");
-		}
 		
+		long hash = id;
+		obj.put("image",hash);
+	
 		JSONArray ar = new JSONArray();
 		if (tagIDs != null){
 			for (String id:tagIDs){
