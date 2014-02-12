@@ -20,8 +20,9 @@ public class ContainerStateUpdate {
 	private final Activity activity;
 
 	private final int batteryState;
-	
-	public ContainerStateUpdate(Activity activity, List<Item> itemsInContainer,int batteryState) {
+
+	public ContainerStateUpdate(Activity activity, List<Item> itemsInContainer,
+			int batteryState) {
 		this.itemList = itemsInContainer;
 		this.activity = activity;
 		this.batteryState = batteryState;
@@ -37,9 +38,10 @@ public class ContainerStateUpdate {
 		return activity;
 	}
 
-	public int getBatteryState(){
+	public int getBatteryState() {
 		return batteryState;
 	}
+
 	// Serializing
 
 	@Override
@@ -69,9 +71,9 @@ public class ContainerStateUpdate {
 			JSONArray arr;
 			arr = (JSONArray) p.parse(obj.get("itemList").toString());
 			List<Item> itemList = ItemListSerializer.deserialize(arr);
-			int battery = Integer.parseInt(obj.get("batteryState").toString()); 
+			int battery = Integer.parseInt(obj.get("batteryState").toString());
 			ContainerStateUpdate ret = new ContainerStateUpdate(activity,
-					itemList,battery);
+					itemList, battery);
 			return ret;
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -83,9 +85,12 @@ public class ContainerStateUpdate {
 	public List<Item> getMissingItems() {
 		List<Item> itemsIn = this.getItemList();
 		List<Item> itemsMustBeIn = this.getActivity().getItemsForActivity();
-
-		ArrayList<Item> ret = new ArrayList<Item>(itemsMustBeIn);
-
+		ArrayList<Item> ret;
+		if (itemsMustBeIn == null) {
+			ret = new ArrayList<Item>();
+		} else {
+			ret = new ArrayList<Item>(itemsMustBeIn);
+		}
 		for (Item item : itemsIn) {
 			boolean b = ret.remove(item);
 		}
@@ -96,8 +101,13 @@ public class ContainerStateUpdate {
 	public List<Item> getNeedlessItems() {
 		List<Item> itemsIn = this.getItemList();
 		List<Item> itemsMustBeIn = this.getActivity().getItemsForActivity();
+		ArrayList<Item> mustIn;
+		if (itemsMustBeIn == null) {
+			mustIn = new ArrayList<Item>();
+		} else {
+			mustIn = new ArrayList<Item>(itemsMustBeIn);
+		}
 
-		ArrayList<Item> mustIn = new ArrayList<Item>(itemsMustBeIn);
 		ArrayList<Item> ret = new ArrayList<Item>();
 
 		for (Item item : itemsIn) {
