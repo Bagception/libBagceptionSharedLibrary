@@ -2,6 +2,11 @@ package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import org.json.simple.JSONObject;
 
+/**
+ * bundle message protocol class for generic wifi access points and/or bluetooth devices
+ * @author xaffe
+ *
+ */
 public class WifiBTDevice {
 	
 	private String name;

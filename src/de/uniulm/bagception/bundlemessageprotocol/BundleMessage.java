@@ -60,10 +60,41 @@ public class BundleMessage {
 		 */
 		IMAGE_REPLY,
 		
+		
 		/**
 		 * explicitly request a CONTAINER_STATUS_UPDATE
 		 */
 		CONTAINER_STATUS_UPDATE_REQUEST,
+		
+		/**
+		 * requests a current position lookup
+		 */
+		LOCATION_REQUEST,
+		
+		/**
+		 * contains a location object with current latitude longitude positions
+		 */
+		LOCATION_REPLY,
+		
+		/**
+		 * resolves an given address to latitude longitude coords
+		 */
+		RESOLVE_ADDRESS_REQUEST,
+		
+		/**
+		 * contains latitude longitude coords for an given address
+		 */
+		RESOLVE_ADDRESS_REPLY,
+		
+		/**
+		 * resolves latitude longitude coords to an address
+		 */
+		RESOLVE_COORDS_REQUEST,
+		
+		/**
+		 * contains an address for given latitude longitude coords
+		 */
+		RESOLVE_COORDS_REPLY,
 		
 		/**
 		 * requests a wifi accesspoint inquiry

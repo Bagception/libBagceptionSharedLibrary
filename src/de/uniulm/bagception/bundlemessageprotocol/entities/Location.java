@@ -39,7 +39,7 @@ public class Location {
 		this.mac = mac;
 	}
 	
-	public Location(long id, String name, Float lat, Float lng,Integer radius,String mac){
+	public Location(long id, String name, Float lat, Float lng, Integer radius, String mac){
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
