@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 
 public class Item extends Observable{
@@ -244,10 +245,12 @@ public class Item extends Observable{
 		}
 		
 		
-		String serializedImage = obj.get("serializedImage") != null?obj.get("serializedImage").toString():null;
+		String serializedImage = obj.get("serializedImage") != null ? obj.get("serializedImage").toString() : null;
 		Item i = new Item(id,name,c,isActivityIndependent,isImportant,a,ar);
 		if (serializedImage != null){
 			i.setImageString(serializedImage);
+		}else{
+			i.setImageString(null);
 		}
 		
 		
