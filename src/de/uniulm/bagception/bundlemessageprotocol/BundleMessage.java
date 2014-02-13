@@ -132,7 +132,27 @@ public class BundleMessage {
 		 * If an ADMINISTRATION_COMMAND comes from the client, it is request to do such an operation
 		 * It the command comes from the server, it is the answer if the command was successfull or not. Command request/replys for one operation share the same stream-id  
 		 */
-		ADMINISTRATION_COMMAND;
+		ADMINISTRATION_COMMAND,
+		
+		/**
+		 * requests a list of calendar names which are used on the server
+		 */
+		CALENDAR_NAME_REQUEST,
+		
+		/**
+		 * contains a list of calendar names which are used on the server
+		 */
+		CALENDAR_NAME_REPLY,
+		
+		/**
+		 * requests a list of calendar events
+		 */
+		CALENDAR_EVENT_REQUEST,
+		
+		/**
+		 * contains a list of calendar events
+		 */
+		CALENDAR_EVENT_REPLY;
 	}
 	
 	//Item
