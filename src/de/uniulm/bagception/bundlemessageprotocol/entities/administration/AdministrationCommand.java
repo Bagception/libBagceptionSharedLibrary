@@ -117,8 +117,23 @@ public class AdministrationCommand<E> {
 	}
 	
 	public static AdministrationCommand<?> fromJSONObject(JSONObject json){
-		int ord = Integer.parseInt(json.get("entity").toString());
-		int op = Integer.parseInt(json.get("operation").toString());
+		if (json == null) return null;
+		Object jsonEntity = json.get("entity");
+		int	ord = 0;
+		if (jsonEntity != null){
+			ord = Integer.parseInt(jsonEntity.toString());
+		}else{
+			return null;
+		}
+		
+		Object jsonOp = json.get("operation");
+		int	op = 0;
+		if (jsonOp != null){
+			op = Integer.parseInt(jsonOp.toString());
+		}else{
+			return null;
+		}
+		
 		Entity e = Entity.values()[ord];
 		Operation o = Operation.values()[op];
 		
