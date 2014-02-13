@@ -75,7 +75,6 @@ public class RFIDMiniMe  {
 	
 	
 	private static synchronized void initInventory(final Context c) {
-		log("init inventory");
 		isScanning = true;
 		startTime = System.currentTimeMillis();
 		
@@ -109,7 +108,6 @@ public class RFIDMiniMe  {
 								// send broadcast and remove last character from string (blank)
 								sendBroadcastTagFound(c, finalCmd.getTag().trim());
 								startTime=System.currentTimeMillis();//update timestamp, to prevent stop scanning 
-								log("tag added: " + finalCmd.getTagId());
 							}
 							finalCmd.setCmd(CMD_Iso18k6cTagAccess.Action.NextTag);
 						}
@@ -166,8 +164,5 @@ public class RFIDMiniMe  {
 		finalCmd.setCmd(PowerState.Sleep);
 	}
 	
-	private static void log(String string) {
-		Log.d("RFIDMiniMe", string);
-	}
 	
 }

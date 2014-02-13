@@ -74,7 +74,6 @@ public abstract class ObservableService extends Service{
 		sendStoppedIntent();
 		unregisterReceiver(resendStatusBroadcastRecv);
 		super.onDestroy();
-		Log.d("SERVICE","onDestroy called");
 	}
 	
 	private void sendStartedIntent(){

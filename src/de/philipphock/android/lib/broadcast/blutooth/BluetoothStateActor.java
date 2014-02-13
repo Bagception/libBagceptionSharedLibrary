@@ -31,7 +31,6 @@ public class BluetoothStateActor extends
 
 	
 	private void fireCallbacks(String action, int state){
-		Log.d("BT",action+" "+state);
 		if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
 
 			switch (state) {

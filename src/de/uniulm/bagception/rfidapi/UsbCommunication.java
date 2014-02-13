@@ -32,8 +32,6 @@ public class UsbCommunication{
 	
 	public static UsbCommunication newInstance() {
 		usbComm = new UsbCommunication();
-		Log.d(TAG,"new usbcomm instance");
-
 		return usbComm;
 	}
 
@@ -147,12 +145,10 @@ public class UsbCommunication{
     			UsbRequest request = new UsbRequest();
     			if (mDeviceConnection == null){
     				mStop = true;
-    				Log.d("NPE","mDeviceConnection is null");
     				return null;
     			}
     			if (mEndpointIn == null){
     				mStop = true;
-    				Log.d("NPE","mEndpointIn is null");
     				return null;
     			}
     			request.initialize(mDeviceConnection, mEndpointIn);
@@ -187,7 +183,6 @@ public class UsbCommunication{
 		public void run() {
 			while(true) {
 					if(mStop) {
-						Log.d(TAG, "Stop Thread");
 						return;
 					}
 					

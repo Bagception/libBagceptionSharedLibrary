@@ -10,6 +10,8 @@ public class Calendar {
 	 */
 	public static final String REQUEST_TYPE = "requestType";
 	
+	public static final String RESPONSE_TYPE = "responseType";
+	
 	/**
 	 * 1. List of Android Calendar names for an intent service as a limit for the returned calendar events
 	 * <br>2. List of Android Calendar names returned from our own CalendarService
