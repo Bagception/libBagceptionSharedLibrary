@@ -48,7 +48,6 @@ public class USBConnectionServiceHelper {
 		final String servicename=ServiceNames.RFID_SERVICE;
 		if (!context.bindService(new Intent(servicename),
 				usbConnectionService, Context.BIND_AUTO_CREATE)){
-			Log.d("Service","error binding to service: "+servicename);
 			callback.onUSBConnectionError(new Exception("error binding to connection service"));
 		}
 
