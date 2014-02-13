@@ -28,7 +28,7 @@ public class Activity {
 	}
 	
 	public Activity(String name, List<Item> itemsForActivity) {
-		this(name, new ArrayList<Item>(), null);
+		this(name, itemsForActivity, null);
 	}
 	
 	public Activity(String name,List<Item> itemsForActivity,Location location) {
