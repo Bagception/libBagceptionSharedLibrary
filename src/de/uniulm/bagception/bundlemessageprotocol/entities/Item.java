@@ -308,6 +308,7 @@ public class Item extends Observable{
 	
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+		
 		byte[] byteArray = stream.toByteArray();
 		
 		String enc=Base64.encodeToString(byteArray, Base64.DEFAULT);
