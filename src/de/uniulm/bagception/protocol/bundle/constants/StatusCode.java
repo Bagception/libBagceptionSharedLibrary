@@ -15,7 +15,9 @@ public enum StatusCode {
 	CONNECTED(1),
 	ERROR(2),
 	SCAN_DEVICES_DONE(3),
-	UNABLE_TO_SEND_DATA(4);
+	UNABLE_TO_SEND_DATA(4),
+	CONNECTING(5);
+	
 	
 	private static final String EXTRA_STATUSCODE = "de.uniulm.bundle.extra.bluetooth.comm.statuscode";	
 
