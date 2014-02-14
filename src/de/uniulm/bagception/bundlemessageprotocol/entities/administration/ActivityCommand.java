@@ -23,6 +23,12 @@ public abstract class ActivityCommand {
 	public static AdministrationCommand<Activity> list(){
 		return new AdministrationCommand<Activity>(Entity.ACTIVITY, Operation.LIST, UUID.randomUUID(), true, "", new Activity[]{});
 	}
+	public static AdministrationCommand<Activity> start(final Activity activity){
+		return new AdministrationCommand<Activity>(Entity.ACTIVITY, Operation.START, UUID.randomUUID(), true, "", new Activity[]{activity});
+	}
+	public static AdministrationCommand<Activity> stop(Activity activity){
+		return new AdministrationCommand<Activity>(Entity.ACTIVITY, Operation.STOP, UUID.randomUUID(), true, "", new Activity[]{activity});
+	}
 	
 	public static AdministrationCommand<Activity> reply(AdministrationCommand<Activity> command,boolean isSuccessful,String errorMessage){
 		return new AdministrationCommand<Activity>(command.getEntity(),command.getOperation(), command.getStreamId(), isSuccessful, errorMessage, command.getPayloadObjects());

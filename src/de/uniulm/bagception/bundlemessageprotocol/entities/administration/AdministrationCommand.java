@@ -15,7 +15,7 @@ public class AdministrationCommand<E> {
 
 	
 	public enum Operation {
-		ADD, DEL, EDIT,LIST
+		ADD, DEL, EDIT,LIST,START,STOP
 	}
 	
 	public enum Entity{
