@@ -12,7 +12,6 @@ import org.json.simple.JSONObject;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.util.Log;
 
 
 public class Item extends Observable{
@@ -103,6 +102,9 @@ public class Item extends Observable{
 	}
 	public void serializeImage(){
 		serializeImage =  true;
+	}
+	public void serializeImage(boolean doSerialize){
+		serializeImage =  doSerialize;
 	}
 //	public Item(String name,ArrayList<String> tagIDs){
 //		this(-1,name,null,Item.VISIBILITY_PUBLIC,tagIDs,0,false, false);
