@@ -103,6 +103,9 @@ public class Item extends Observable{
 	public void serializeImage(){
 		serializeImage =  true;
 	}
+	public void serializeImage(boolean doSerialize){
+		serializeImage =  doSerialize;
+	}
 //	public Item(String name,ArrayList<String> tagIDs){
 //		this(-1,name,null,Item.VISIBILITY_PUBLIC,tagIDs,0,false, false);
 //	}
@@ -244,10 +247,12 @@ public class Item extends Observable{
 		}
 		
 		
-		String serializedImage = obj.get("serializedImage") != null?obj.get("serializedImage").toString():null;
+		String serializedImage = obj.get("serializedImage") != null ? obj.get("serializedImage").toString() : null;
 		Item i = new Item(id,name,c,isActivityIndependent,isImportant,a,ar);
 		if (serializedImage != null){
 			i.setImageString(serializedImage);
+		}else{
+			i.setImageString(null);
 		}
 		
 		
@@ -308,6 +313,7 @@ public class Item extends Observable{
 	
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+		
 		byte[] byteArray = stream.toByteArray();
 		
 		String enc=Base64.encodeToString(byteArray, Base64.DEFAULT);

@@ -41,6 +41,9 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 				case LIST: 
 					callbacks.onItemList(c);
 				break;
+				
+				default: break;
+
 			}
 			return;
 		}
@@ -63,6 +66,8 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 				case LIST: 
 					callbacks.onLocationList(c);
 				break;
+				default: break;
+
 			}
 			return;
 		}
@@ -85,6 +90,15 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 				case LIST: 
 					callbacks.onActivityList(c);
 				break;
+				
+				case START:
+					callbacks.onActivityStart(c.getPayloadObjects()[0], c);
+					break;
+					
+				case STOP:
+					callbacks.onActivityStop(c.getPayloadObjects()[0], c);
+					break;
+
 			}
 			return;
 		}
@@ -108,6 +122,8 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 				case LIST: 
 					callbacks.onCategoryList(c);
 				break;
+				default: break;
+
 			}
 			return;
 		}
@@ -192,6 +208,16 @@ public class AdministrationCommandProcessor implements AdministrationCommandRece
 
 	@Override
 	public void onCategoryList(AdministrationCommand<Category> i) {
+		
+	}
+
+	@Override
+	public void onActivityStart(Activity a, AdministrationCommand<Activity> cmd) {
+		
+	}
+
+	@Override
+	public void onActivityStop(Activity a, AdministrationCommand<Activity> cmd) {
 		
 	}
 

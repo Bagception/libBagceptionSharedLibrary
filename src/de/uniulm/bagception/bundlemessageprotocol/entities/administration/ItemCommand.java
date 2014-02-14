@@ -28,6 +28,9 @@ public abstract class ItemCommand{
 	}
 	
 	public static AdministrationCommand<Item> reply(AdministrationCommand<Item> command,boolean isSuccessful,String errorMessage){
+		for (Item i:command.getPayloadObjects()){
+			i.serializeImage(false);
+		}
 		return new AdministrationCommand<Item>(command.getEntity(),command.getOperation(), command.getStreamId(), isSuccessful, errorMessage, command.getPayloadObjects());
 	}
 	

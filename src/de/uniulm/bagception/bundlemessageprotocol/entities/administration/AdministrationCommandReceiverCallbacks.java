@@ -17,6 +17,9 @@ public interface AdministrationCommandReceiverCallbacks{
 	public void onActivityEdit(Activity toEdit, Activity editValues,AdministrationCommand<Activity> cmd);
 	public void onActivityList(AdministrationCommand<Activity> cmd);
 	
+	public void onActivityStart(Activity a, AdministrationCommand<Activity> cmd);
+	public void onActivityStop(Activity a, AdministrationCommand<Activity> cmd);
+	
 	public void onLocationAdd(Location a,AdministrationCommand<Location> cmd);
 	public void onLocationDel(Location a,AdministrationCommand<Location> cmd);
 	public void onLocationEdit(Location toEdit, Location editValues,AdministrationCommand<Location> cmd);

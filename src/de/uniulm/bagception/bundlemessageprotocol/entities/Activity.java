@@ -17,6 +17,7 @@ public class Activity {
 	private final Location location;
 	private final long id;
 	
+	public static final Activity NO_ACTIVITY = new Activity("keine Aktivität");
 	
 	public Activity(String name){
 		this(name, new ArrayList<Item>());
@@ -28,7 +29,7 @@ public class Activity {
 	}
 	
 	public Activity(String name, List<Item> itemsForActivity) {
-		this(name, new ArrayList<Item>(), null);
+		this(name, itemsForActivity, null);
 	}
 	
 	public Activity(String name,List<Item> itemsForActivity,Location location) {

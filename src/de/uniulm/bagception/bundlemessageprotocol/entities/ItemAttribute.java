@@ -12,27 +12,19 @@ public class ItemAttribute {
 	
 	
 	public ItemAttribute(String temperature, String weather, String lightness) {
-		id = -1;
-		item_id = -1;
-		this.temperature = temperature;
-		this.weather = weather;
-		this.lightness = lightness;
+		this(-1,-1,temperature,weather,lightness);
 	}
 	
 	public ItemAttribute(long item_id, String temperature, String weather, String lightness) {
-		id = -1;
-		this.item_id = item_id;
-		this.temperature = temperature;
-		this.weather = weather;
-		this.lightness = lightness;
+		this(-1,item_id,temperature,weather,lightness);
 	}
 	
 	public ItemAttribute(long id, long item_id, String temperature, String weather, String lightness) {
 		this.id = id;
 		this.item_id = item_id;
-		this.temperature = temperature;
-		this.weather = weather;
-		this.lightness = lightness;
+		this.temperature = temperature == null ? "" : temperature;
+		this.weather = weather == null ? "" : weather;
+		this.lightness = lightness == null ? "" : lightness;
 	}
 	
 	
@@ -58,15 +50,18 @@ public class ItemAttribute {
 		return this.lightness;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return toJSONObject().toJSONString();
+	}
 	
 	
 	public static ItemAttribute fromJSON(JSONObject json){
 		long id = Integer.parseInt(json.get("id").toString());
 		long item_id = Integer.parseInt(json.get("item_id").toString());
-		String temperature = (String) json.get("temperature");
-		String weather = (String) json.get("weather");
-		String lightness = (String) json.get("lightness");
+		String temperature = json.get("temperature").toString();
+		String weather = json.get("weather").toString();
+		String lightness = json.get("lightness").toString();
 		return new ItemAttribute(id, item_id, temperature, weather, lightness);
 	}
 	
