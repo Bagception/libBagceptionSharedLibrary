@@ -90,7 +90,7 @@ public class CalendarEvent {
 		return toJSONObject().toJSONString();
 	}
 	
-	public CalendarEvent fromJSON(JSONObject jsonObject){
+	public static CalendarEvent fromJSON(JSONObject jsonObject){
 		
 		String name = (String) jsonObject.get("name");
 		String calendarName = (String) jsonObject.get("calendarName");
