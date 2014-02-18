@@ -152,7 +152,12 @@ public class BundleMessage {
 		/**
 		 * contains a list of calendar events
 		 */
-		CALENDAR_EVENT_REPLY;
+		CALENDAR_EVENT_REPLY,
+		
+		/**
+		 * Contains an ActivityPriorityList object that indicates which activity might be active  
+		 */
+		ACTIVITY_PRIORITY_LIST;
 	}
 	
 	//Item
