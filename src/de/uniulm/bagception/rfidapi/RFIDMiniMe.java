@@ -102,10 +102,12 @@ public class RFIDMiniMe  {
 					CMD_Iso18k6cTagAccess.RFID_18K6CTagInventory finalCmd = (CMD_Iso18k6cTagAccess.RFID_18K6CTagInventory) mMtiCmd;
 					if (finalCmd.setCmd(CMD_Iso18k6cTagAccess.Action.StartInventory)) {
 						for(int tagCount = 0; tagCount < finalCmd.getTagNumber(); tagCount++){
-							boolean newTagFound = hashTagList.add(finalCmd.getTagId());
+							String id = finalCmd.getTagId().substring(12).trim();
+							
+							boolean newTagFound = hashTagList.add(id);
 							if(newTagFound){
 								// send broadcast and remove last character from string (blank)
-								sendBroadcastTagFound(c, finalCmd.getTag().trim());
+								sendBroadcastTagFound(c, id);
 								startTime=System.currentTimeMillis();//update timestamp, to prevent stop scanning 
 							}
 							finalCmd.setCmd(CMD_Iso18k6cTagAccess.Action.NextTag);
