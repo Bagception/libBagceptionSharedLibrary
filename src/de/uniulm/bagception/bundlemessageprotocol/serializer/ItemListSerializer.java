@@ -8,8 +8,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import android.util.Log;
-
 import de.uniulm.bagception.bundlemessageprotocol.entities.Item;
 
 public class ItemListSerializer {
