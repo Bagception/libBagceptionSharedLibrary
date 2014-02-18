@@ -154,4 +154,19 @@ public class Activity {
 		}		
 		return null;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+	
+		if (o==null) return false;
+		if (this == o) return true;
+		Activity oa = (Activity) o;
+		if (id != oa.getId()) return false;
+		if (name != null){
+			if (!name.equals(oa.name)) return false;	
+		}else{
+			if (oa.name != null) return false;
+		}
+		return true;
+	}
 }

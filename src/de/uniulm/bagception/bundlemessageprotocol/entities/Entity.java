@@ -35,5 +35,19 @@ public abstract class Entity {
 
 	
 	public abstract JSONObject toJSONObject();
+
+	public boolean equals(Object o) {
+		if (o==null) return false;
+		if (this == o) return true;
+		Entity oe = (Entity) o;
+		if (id != oe.getId()) return false;
+		if (name != null){
+			if (!name.equals(oe.name)) return false;	
+		}else{
+			if (oe.name != null) return false;
+		}
+		
+		return true;
+	}
 	
 }

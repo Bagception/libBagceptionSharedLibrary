@@ -1,6 +1,7 @@
 package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -12,13 +13,15 @@ public class ActivityPriorityList extends Entity{
 
 	private final List<Activity> activities;
 	private final int[] priorities;
-	
 	public ActivityPriorityList(List<Activity> activityList,int[] priorityList) {
 		super(-1,null);
 		this.activities = activityList==null?new ArrayList<Activity>():activityList;
 		this.priorities = priorityList==null?new int[0]:priorityList;
 	}
 
+	
+
+	
 	public List<Activity> getActivities() {
 		return activities;
 	}
@@ -78,6 +81,30 @@ public class ActivityPriorityList extends Entity{
 		return l;
 	}
 
+	@Override
+	public int hashCode() {
+		int ret = 1;
+		ret = ret * 17 + Arrays.toString(priorities).hashCode();
+		for (Activity a: activities){
+			ret += (int)(a.getId() ^ (a.getId() >>> 32));
+		}
+		 
+		
+		return ret;
+	}
+
 	
+	@Override
+	public boolean equals(Object o) {
+		if (o==null) return false;
+		if (this == o) return true;
+		if (!super.equals(o)) return false;
+		if (!(o instanceof ActivityPriorityList)) {
+			return false;
+		}
+		ActivityPriorityList apl = (ActivityPriorityList) o;
+		
+		return (apl.activities.equals(this.activities) && Arrays.equals(apl.priorities, priorities));
+	}
 	
 }

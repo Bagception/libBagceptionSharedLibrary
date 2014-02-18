@@ -10,6 +10,8 @@ import de.uniulm.bagception.bluetoothclientmessengercommunication.BagceptionBTSe
 
 public class BagceptionBluetoothUtil {
 	public static boolean isBagceptionServer(BluetoothDevice device){
+		if (device == null) return false;
+		if (device.getUuids() == null) return false;
 		for (int i=0;i<device.getUuids().length;i++){
 			UUID uuid = device.getUuids()[i].getUuid();
 			if (uuid.toString().equalsIgnoreCase(BagceptionBTServiceInterface.BT_UUID)){
