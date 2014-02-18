@@ -2,8 +2,6 @@ package de.uniulm.bagception.rfidapi;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 public abstract class MtiCmd {
 /*	
 	// RFID Module Configuration

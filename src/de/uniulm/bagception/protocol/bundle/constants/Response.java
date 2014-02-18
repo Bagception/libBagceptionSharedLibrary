@@ -1,7 +1,7 @@
 package de.uniulm.bagception.protocol.bundle.constants;
 
-import de.uniulm.bagception.bluetoothservermessengercommunication.messenger.MessengerHelper;
 import android.os.Bundle;
+import de.uniulm.bagception.bluetoothservermessengercommunication.messenger.MessengerHelper;
 /**
  * 
  * when the system cannot decide what to do, a Response is sent out.

@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 import de.philipphock.android.lib.BroadcastActor;
 
 public class BluetoothStateActor extends

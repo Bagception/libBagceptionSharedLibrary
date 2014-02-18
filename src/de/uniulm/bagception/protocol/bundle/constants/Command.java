@@ -1,7 +1,7 @@
 package de.uniulm.bagception.protocol.bundle.constants;
 
-import de.uniulm.bagception.bluetoothservermessengercommunication.messenger.MessengerHelper;
 import android.os.Bundle;
+import de.uniulm.bagception.bluetoothservermessengercommunication.messenger.MessengerHelper;
 
 public enum Command {
 	TRIGGER_SCAN_DEVICES(0),PING(1),PONG(2),RESEND_STATUS(3),DISCONNECT(4),POLL_ALL_RESPONSES(5);

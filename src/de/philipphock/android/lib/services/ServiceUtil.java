@@ -1,11 +1,11 @@
 package de.philipphock.android.lib.services;
 
-import de.philipphock.android.lib.services.observation.ConstantFactory;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import de.philipphock.android.lib.services.observation.ConstantFactory;
 
 public class ServiceUtil {
 

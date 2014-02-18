@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 import de.philipphock.android.lib.services.ServiceUtil;
 
 public abstract class ObservableService extends Service{

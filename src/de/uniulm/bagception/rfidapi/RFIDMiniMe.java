@@ -5,7 +5,6 @@ import java.util.HashSet;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.util.Log;
 import de.uniulm.bagception.broadcastconstants.BagceptionBroadcastContants;
 import de.uniulm.bagception.rfidapi.CMD_PwrMgt.PowerState;
 import de.uniulm.bagception.rfidapi.connection.USBConnectionServiceCallback;
