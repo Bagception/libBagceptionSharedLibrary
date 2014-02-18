@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 
-@SuppressWarnings("hiding")
 public abstract class BroadcastActor<R extends Reactor> extends BroadcastReceiver{
 	protected final R reactor;
 	public BroadcastActor(R reactor) {

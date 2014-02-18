@@ -89,7 +89,8 @@ public class ContainerStateUpdate {
 			ret = new ArrayList<Item>(itemsMustBeIn);
 		}
 		for (Item item : itemsIn) {
-			boolean b = ret.remove(item);
+			//boolean b = ret.remove(item);
+			ret.remove(item);
 		}
 		return ret;
 

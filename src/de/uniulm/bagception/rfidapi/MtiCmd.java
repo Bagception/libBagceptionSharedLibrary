@@ -1,6 +1,7 @@
 package de.uniulm.bagception.rfidapi;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public abstract class MtiCmd {
 /*	
@@ -47,7 +48,7 @@ public abstract class MtiCmd {
 	private static final byte[] RFID_EngTransmitSerialPattern		= {(byte)0xE8, 0x07};
 	private static final byte[] RFID_EngWriteFullOemData			= {(byte)0xEE, 0x05};
 */
-	private static final boolean DEBUG = true;
+	//private static final boolean DEBUG = true;
 
 	private static final int CMD_LENGTH = 64;
 	private static final int RESPONSE_LENGTH = 64;
