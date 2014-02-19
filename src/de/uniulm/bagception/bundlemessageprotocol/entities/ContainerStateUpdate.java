@@ -15,14 +15,16 @@ public class ContainerStateUpdate {
 
 	private final List<Item> itemList;
 	private final Activity activity;
-
+	private final List<ContextSuggestion> suggestions;
+	
 	private final int batteryState;
 
-	public ContainerStateUpdate(Activity activity, List<Item> itemsInContainer,
+	public ContainerStateUpdate(Activity activity, List<Item> itemsInContainer,List<ContextSuggestion> suggestions,
 			int batteryState) {
 		this.itemList = itemsInContainer;
 		this.activity = activity;
 		this.batteryState = batteryState;
+		this.suggestions = suggestions;
 	}
 
 	// get
@@ -37,6 +39,9 @@ public class ContainerStateUpdate {
 
 	public int getBatteryState() {
 		return batteryState;
+	}
+	public List<ContextSuggestion> getContextSuggestions(){
+		return suggestions;
 	}
 
 	// Serializing
@@ -54,6 +59,7 @@ public class ContainerStateUpdate {
 		ret.put("batteryState", batteryState);
 		ret.put("itemList", ItemListSerializer.serialize(itemList));
 		LOG.out(this, ret.toJSONString());
+		//TODO seriaze context
 		return ret;
 	}
 
@@ -68,9 +74,10 @@ public class ContainerStateUpdate {
 			JSONArray arr;
 			arr = (JSONArray) p.parse(obj.get("itemList").toString());
 			List<Item> itemList = ItemListSerializer.deserialize(arr);
+			//TODO seriaze context
 			int battery = Integer.parseInt(obj.get("batteryState").toString());
 			ContainerStateUpdate ret = new ContainerStateUpdate(activity,
-					itemList, battery);
+					itemList, null,battery);
 			return ret;
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -121,7 +128,5 @@ public class ContainerStateUpdate {
 
 	}
 
-	public List<Item> getContextItems() {
-		return null; // TODO
-	}
+
 }
