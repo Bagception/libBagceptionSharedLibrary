@@ -62,9 +62,12 @@ public class Location {
 		
 		float rad = this.radius == null ? 1 : this.radius;
 		
-		//TODO calc
+		float[] result = new float[3]; 
+		android.location.Location.distanceBetween(getLat(), getLng(), lat, lng, result);
+		//TODO test
+		int radius=(int)result[0];
 		
-		return false;
+		return rad>=radius;
 	}
 	
 	

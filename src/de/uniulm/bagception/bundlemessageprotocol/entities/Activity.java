@@ -1,7 +1,9 @@
 package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,7 +14,7 @@ import de.uniulm.bagception.bundlemessageprotocol.serializer.ItemListSerializer;
 
 public class Activity {
 
-	private final List<Item> itemsForActivity;
+	private final Set<Item> itemsForActivity;
 	private final String name;
 	private final Location location;
 	private final long id;
@@ -33,16 +35,13 @@ public class Activity {
 	}
 	
 	public Activity(String name,List<Item> itemsForActivity,Location location) {
-		id = -1;
-		this.name = name;
-		this.itemsForActivity = itemsForActivity;
-		this.location = location;
+		this(-1,name,itemsForActivity,location);
 	}
 	
 	public Activity(long id, String name, List<Item> itemsForActivity, Location location) {
 		this.id = id;
 		this.name = name;
-		this.itemsForActivity = itemsForActivity;
+		this.itemsForActivity = new HashSet<Item>(itemsForActivity);
 		this.location = location;
 	}
 	
@@ -58,7 +57,7 @@ public class Activity {
 	}
 	
 	public List<Item> getItemsForActivity() {
-		return itemsForActivity;
+		return new ArrayList<Item>(itemsForActivity);
 	}
 	
 	public Location getLocation(){
@@ -85,7 +84,7 @@ public class Activity {
 		if (itemsForActivity == null){
 			ret.put("items", null);
 		}else{
-			ret.put("items", ItemListSerializer.serialize(itemsForActivity));	
+			ret.put("items", ItemListSerializer.serialize(getItemsForActivity()));	
 		}
 		if (location == null){
 			ret.put("location", null);
