@@ -44,8 +44,10 @@ public class ContextSuggestion extends Entity{
 		
 		try {
 			Object o = json.get("itemToReplace");
-			
-			Item itemToReplItem = Item.fromJSON((JSONObject) new JSONParser().parse(o.toString()));
+			Item itemToReplItem = null;
+			if (o!=null){
+				itemToReplItem = Item.fromJSON((JSONObject) new JSONParser().parse(o.toString()));	
+			}			
 			List<Item> replaceSuggestions = ItemListSerializer.deserialize((JSONArray)json.get("replaceSuggestions")); 
 			CONTEXT reason = CONTEXT.values()[Integer.parseInt(json.get("reason").toString())];
 			return new ContextSuggestion(itemToReplItem, replaceSuggestions, reason);
@@ -60,8 +62,8 @@ public class ContextSuggestion extends Entity{
 	@Override
 	public JSONObject toJSONObject() {
 		JSONObject ret = new JSONObject();
-		ret.put("itemToReplace", itemToReplace.toJSONObject());
-		ret.put("replaceSuggestions",ItemListSerializer.serialize(replaceSuggestions));
+		ret.put("itemToReplace", itemToReplace==null?null:itemToReplace.toJSONObject());
+		ret.put("replaceSuggestions",replaceSuggestions==null?null:ItemListSerializer.serialize(replaceSuggestions));
 		ret.put("reason", reason.ordinal());
 		return ret;
 	}
