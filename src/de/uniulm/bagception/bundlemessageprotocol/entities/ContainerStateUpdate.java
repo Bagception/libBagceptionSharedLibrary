@@ -8,7 +8,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import de.philipphock.android.lib.logging.LOG;
 import de.uniulm.bagception.bundlemessageprotocol.serializer.ItemListSerializer;
 
 public class ContainerStateUpdate {
@@ -58,8 +57,11 @@ public class ContainerStateUpdate {
 		ret.put("activity", activity.toJSONObject());
 		ret.put("batteryState", batteryState);
 		ret.put("itemList", ItemListSerializer.serialize(itemList));
-		LOG.out(this, ret.toJSONString());
-		//TODO seriaze context
+		
+		JSONArray a = new JSONArray();
+		a.addAll(suggestions);
+		ret.put("suggestions", a);
+		
 		return ret;
 	}
 
@@ -74,10 +76,30 @@ public class ContainerStateUpdate {
 			JSONArray arr;
 			arr = (JSONArray) p.parse(obj.get("itemList").toString());
 			List<Item> itemList = ItemListSerializer.deserialize(arr);
-			//TODO seriaze context
 			int battery = Integer.parseInt(obj.get("batteryState").toString());
+			
+			List<ContextSuggestion> suggestions = new ArrayList<ContextSuggestion>();
+			{
+				JSONArray jsonArray = new JSONArray();
+				jsonArray=(JSONArray)obj.get("suggestions");
+				for (int i=0;i<jsonArray.size();i++){
+					try {
+						
+						Object obj2 = jsonArray.get(i);
+						if (obj2 == null) continue;
+						JSONObject o = (JSONObject) p.parse(obj2.toString());
+						
+						if (o != null){
+							suggestions.add(ContextSuggestion.fromJSON(o));
+						}
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
 			ContainerStateUpdate ret = new ContainerStateUpdate(activity,
-					itemList, null,battery);
+					itemList, suggestions,battery);
 			return ret;
 		} catch (ParseException e) {
 			e.printStackTrace();
