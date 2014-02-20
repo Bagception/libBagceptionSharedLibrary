@@ -156,7 +156,17 @@ public class BundleMessage {
 		/**
 		 * Contains an ActivityPriorityList object that indicates which activity might be active  
 		 */
-		ACTIVITY_PRIORITY_LIST;
+		ACTIVITY_PRIORITY_LIST,
+		
+		/**
+		 * adds a calendar event with activity name as description
+		 */
+		CALENDAR_ADD_EVENT_REQUEST,
+		
+		/**
+		 * removes a calendar event with activity name as description
+		 */
+		CALENDAR_REMOVE_EVENT_REQUEST;
 	}
 	
 	//Item

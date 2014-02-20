@@ -64,5 +64,9 @@ public class Calendar {
 	 */
 	public static final String EVENT_END_DATE = "endDate";
 	
+	/**
+	 * Adds an event to the servers android calendar
+	 */
+	public static final String ADD_EVENT = "addEvent";
 	
 }
