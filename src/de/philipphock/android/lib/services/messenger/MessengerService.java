@@ -64,7 +64,7 @@ public abstract class MessengerService extends ObservableService {
     private  Handler incomingHandler = new Handler(new Handler.Callback() {
 		
 		@Override
-		public boolean handleMessage(Message msg) {
+		public synchronized boolean handleMessage(Message msg) {
 			switch (msg.what) {
             case MSG_REGISTER_CLIENT:
                 mClients.add(msg.replyTo);

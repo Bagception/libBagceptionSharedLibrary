@@ -58,9 +58,11 @@ public class ContainerStateUpdate {
 		ret.put("batteryState", batteryState);
 		ret.put("itemList", ItemListSerializer.serialize(itemList));
 		
-		JSONArray a = new JSONArray();
-		a.addAll(suggestions);
-		ret.put("suggestions", a);
+		if(suggestions != null){
+			JSONArray a = new JSONArray();
+			a.addAll(suggestions);
+			ret.put("suggestions", a);
+		}
 		
 		return ret;
 	}
@@ -81,21 +83,26 @@ public class ContainerStateUpdate {
 			List<ContextSuggestion> suggestions = new ArrayList<ContextSuggestion>();
 			{
 				JSONArray jsonArray = new JSONArray();
-				jsonArray=(JSONArray)obj.get("suggestions");
-				for (int i=0;i<jsonArray.size();i++){
-					try {
-						
-						Object obj2 = jsonArray.get(i);
-						if (obj2 == null) continue;
-						JSONObject o = (JSONObject) p.parse(obj2.toString());
-						
-						if (o != null){
-							suggestions.add(ContextSuggestion.fromJSON(o));
+				if (obj.get("suggestions") != null){
+					jsonArray=(JSONArray)obj.get("suggestions");
+					
+					
+					for (int i=0;i<jsonArray.size();i++){
+						try {
+							
+							Object obj2 = jsonArray.get(i);
+							if (obj2 == null) continue;
+							JSONObject o = (JSONObject) p.parse(obj2.toString());
+							
+							if (o != null){
+								suggestions.add(ContextSuggestion.fromJSON(o));
+							}
+						} catch (ParseException e) {
+							e.printStackTrace();
 						}
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
+					}	
 				}
+				
 			}
 			
 			ContainerStateUpdate ret = new ContainerStateUpdate(activity,

@@ -6,6 +6,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import android.util.Log;
+
 import de.uniulm.bagception.bundlemessageprotocol.entities.Activity;
 import de.uniulm.bagception.bundlemessageprotocol.entities.Category;
 import de.uniulm.bagception.bundlemessageprotocol.entities.Item;
@@ -136,7 +138,6 @@ public class AdministrationCommand<E> {
 		
 		Entity e = Entity.values()[ord];
 		Operation o = Operation.values()[op];
-		
 		
 		boolean isSuccessful = Boolean.parseBoolean(json.get("isSuccessful").toString());
 		
