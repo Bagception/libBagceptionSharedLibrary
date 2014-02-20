@@ -58,9 +58,11 @@ public class ContainerStateUpdate {
 		ret.put("batteryState", batteryState);
 		ret.put("itemList", ItemListSerializer.serialize(itemList));
 		
-		JSONArray a = new JSONArray();
-		a.addAll(suggestions);
-		ret.put("suggestions", a);
+		if(suggestions != null){
+			JSONArray a = new JSONArray();
+			a.addAll(suggestions);
+			ret.put("suggestions", a);
+		}
 		
 		return ret;
 	}
