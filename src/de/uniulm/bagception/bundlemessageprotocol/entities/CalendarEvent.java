@@ -12,6 +12,7 @@ public class CalendarEvent {
 	private long startDate;
 	private long endDate;
 	
+	
 	public CalendarEvent(	String name, String calendarName, String description,
 							String location, long startDate, long endDate){
 		
@@ -21,6 +22,7 @@ public class CalendarEvent {
 		this.location = location;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		
 	}
 
 	public String getName() {
@@ -30,7 +32,7 @@ public class CalendarEvent {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public String getCalendarName() {
 		return calendarName;
 	}
