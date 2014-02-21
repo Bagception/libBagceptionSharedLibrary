@@ -266,7 +266,7 @@ public class Item extends Observable{
 		for (String s:tagIDs){
 			sb.append(s);
 		}
-		return sb.hashCode();
+		return (name+""+id).hashCode();
 	}
 	
 	@Override
