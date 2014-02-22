@@ -167,7 +167,12 @@ public class BundleMessage {
 		/**
 		 * removes a calendar event with activity name as description
 		 */
-		CALENDAR_REMOVE_EVENT_REQUEST;
+		CALENDAR_REMOVE_EVENT_REQUEST,
+		
+		/**
+		 * reply for a calendar remove event request
+		 */
+		CALENDAR_REMOVE_EVENT_REPLY;
 	}
 	
 	//Item
