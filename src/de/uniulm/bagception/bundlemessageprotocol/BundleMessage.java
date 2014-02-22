@@ -30,7 +30,7 @@ public class BundleMessage {
 		NOT_A_BUNDLE_MESSAGE,
 		
 		/**
-		 * @deprecated this messagetype is no longer supported, use CONTAINER_STATUS_UPDATE instead
+		 * used for tone generation on client
 		 */
 		ITEM_FOUND,
 		
