@@ -70,7 +70,25 @@ public class ContextSuggestion extends Entity{
 	
 
 	
-	//TODO SERIALIZE
+	public static boolean isInItemsToReplace(List<ContextSuggestion> suggestions,Item item){
+		for(ContextSuggestion sug:suggestions){
+			if (sug.getItemToReplace().equals(item)){
+				return true;
+			}
+		}
+		return false;
+	}
+	public static boolean isInReplaceSuggestions(List<ContextSuggestion> suggestions,Item item){
+		for(ContextSuggestion sug:suggestions){
+			for(Item i:sug.getReplaceSuggestions()){
+				if (i.equals(item)){
+					return true;
+				}
+			}
+			
+		}
+		return false;
+	}
 
 
 
