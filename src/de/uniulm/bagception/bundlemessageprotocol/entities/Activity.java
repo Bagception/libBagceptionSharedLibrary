@@ -80,6 +80,12 @@ public class Activity {
 	public JSONObject toJSONObject(){
 		JSONObject ret = new JSONObject();
 		
+		if(id == 0){
+			ret.put("id", -1);
+		} else{
+			ret.put("id", id);
+		}
+		
 		if (name == null){
 			ret.put("name", null);
 		}else{
@@ -101,11 +107,15 @@ public class Activity {
 	}
 	
 	public static Activity fromJSON(JSONObject obj){
+		long item_id;
 		String name;
 		JSONParser p = new JSONParser();
 		List<Item> items;
 		Location loc;
 		try {
+			{
+				item_id = Long.parseLong(obj.get("id").toString());
+			}
 			{
 				Object n = obj.get("name");
 				if (n==null){
@@ -149,7 +159,7 @@ public class Activity {
 			}
 			
 			
-			Activity ret = new Activity(name, items,loc);
+			Activity ret = new Activity(item_id, name, items,loc);
 			return ret;
 		
 		} catch (ParseException e) {
