@@ -2,10 +2,13 @@ package de.uniulm.bagception.bundlemessageprotocol.entities;
 
 import org.json.simple.JSONObject;
 
+import android.util.Log;
+
 
 public class CalendarEvent {
 
 	private String name;
+	private int eventId;
 	private String calendarName;
 	private String description;
 	private String location;
@@ -13,10 +16,11 @@ public class CalendarEvent {
 	private long endDate;
 	
 	
-	public CalendarEvent(	String name, String calendarName, String description,
+	public CalendarEvent(	String name, int eventId, String calendarName, String description,
 							String location, long startDate, long endDate){
 		
 		this.name = name;
+		this.eventId = eventId;
 		this.calendarName = calendarName;
 		this.description = description;
 		this.location = location;
@@ -31,6 +35,14 @@ public class CalendarEvent {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public int getEventId(){
+		return this.eventId;
+	}
+	
+	public void setEventId(int eventId){
+		this.eventId = eventId;
 	}
 	
 	public String getCalendarName() {
@@ -78,6 +90,7 @@ public class CalendarEvent {
 		JSONObject jsonObject = new JSONObject();
 		
 			jsonObject.put("name", this.name);
+			jsonObject.put("eventId", this.eventId);
 			jsonObject.put("description", this.description);
 			jsonObject.put("calendarName", this.calendarName);
 			jsonObject.put("location", this.location);
@@ -93,14 +106,14 @@ public class CalendarEvent {
 	}
 	
 	public static CalendarEvent fromJSON(JSONObject jsonObject){
-		
 		String name = (String) jsonObject.get("name");
+		int eventId = 1;
+//		Integer.parseInt(jsonObject.get("eventId").toString());
 		String calendarName = (String) jsonObject.get("calendarName");
 		String description = (String) jsonObject.get("description");
 		String location = (String) jsonObject.get("location");
 		long startDate = (Long) jsonObject.get("startDate");
 		long endDate = (Long) jsonObject.get("endDate");
-		return new CalendarEvent(name, calendarName, description, location, startDate, endDate);
-		
+		return new CalendarEvent(name, eventId, calendarName, description, location, startDate, endDate);
 	}
 }

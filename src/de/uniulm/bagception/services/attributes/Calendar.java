@@ -69,4 +69,6 @@ public class Calendar {
 	 */
 	public static final String ADD_EVENT = "addEvent";
 	
+	public static final String REMOVE_EVENT = "removeEvent";
+	
 }
