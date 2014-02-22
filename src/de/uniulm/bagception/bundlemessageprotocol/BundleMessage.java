@@ -172,7 +172,12 @@ public class BundleMessage {
 		/**
 		 * reply for a calendar remove event request
 		 */
-		CALENDAR_REMOVE_EVENT_REPLY;
+		CALENDAR_REMOVE_EVENT_REPLY,
+		
+		/**
+		 * a string message
+		 */
+		STRING_MESSAGE;
 	}
 	
 	//Item
