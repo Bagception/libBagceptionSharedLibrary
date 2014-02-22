@@ -42,6 +42,9 @@ public class Activity {
 	public Activity(long id, String name, List<Item> itemsForActivity, Location location) {
 		this.id = id;
 		this.name = name;
+		if (itemsForActivity == null){
+			itemsForActivity = new ArrayList<Item>();
+		}
 		this.itemsForActivity = Collections.unmodifiableSet(new HashSet<Item>(itemsForActivity));
 		this.location = location;
 	}
