@@ -58,6 +58,38 @@ public class ContextSuggestion extends Entity{
 		
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (o==null) return false;
+		if (this == o) return true;
+		if (!(o instanceof ContextSuggestion)) {
+			return false;
+		}
+		ContextSuggestion oItem = (ContextSuggestion) o;
+		
+		
+		
+		if (itemToReplace != null){
+			if (!itemToReplace.equals(oItem.itemToReplace)) return false;
+		}else{
+			if (oItem.itemToReplace != null){
+				return false;
+			}
+		}
+		
+		if (replaceSuggestions != null){
+			if (!replaceSuggestions.equals(oItem.replaceSuggestions)) return false;
+		}else{
+			if (oItem.replaceSuggestions != null){
+				return false;
+			}
+		}
+		
+		
+		
+		return true;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject toJSONObject() {
@@ -72,17 +104,22 @@ public class ContextSuggestion extends Entity{
 	
 	public static ContextSuggestion getItemsToReplace(List<ContextSuggestion> suggestions,Item item){
 		for(ContextSuggestion sug:suggestions){
-			if (sug.getItemToReplace().equals(item)){
+			if (sug.getItemToReplace() != null && sug.getItemToReplace().equals(item)){
 				return sug;
 			}
 		}
 		return null;
+	
 	}
+	
+	
 	public static ContextSuggestion getReplaceSuggestions(List<ContextSuggestion> suggestions,Item item){
 		for(ContextSuggestion sug:suggestions){
-			for(Item i:sug.getReplaceSuggestions()){
-				if (i.equals(item)){
-					return sug;
+			if (sug.getReplaceSuggestions() != null){
+				for(Item i:sug.getReplaceSuggestions()){
+					if (i.equals(item)){
+						return sug;
+					}
 				}
 			}
 			

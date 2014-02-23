@@ -39,15 +39,15 @@ public class ItemAttribute {
 	}
 	
 	public String getTemperature(){
-		return this.temperature;
+		return this.temperature;//warm, cold
 	}
 	
 	public String getWeather(){
-		return this.weather;
+		return this.weather;//rainy, sunny
 	}
 	
 	public String getLightness(){
-		return this.lightness;
+		return this.lightness; //light, dark
 	}
 	
 	@Override
