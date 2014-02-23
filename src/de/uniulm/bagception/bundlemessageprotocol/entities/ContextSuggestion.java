@@ -100,8 +100,6 @@ public class ContextSuggestion extends Entity{
 		return ret;
 	}
 	
-
-	
 	public static ContextSuggestion getItemsToReplace(List<ContextSuggestion> suggestions,Item item){
 		for(ContextSuggestion sug:suggestions){
 			if (sug.getItemToReplace() != null && sug.getItemToReplace().equals(item)){
