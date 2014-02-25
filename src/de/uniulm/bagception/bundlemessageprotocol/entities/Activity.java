@@ -20,7 +20,7 @@ public class Activity {
 	private final Location location;
 	private final long id;
 	
-	public static final Activity NO_ACTIVITY = new Activity("keine");
+	public static final Activity NO_ACTIVITY = new Activity("Keine");
 	
 	public Activity(String name){
 		this(name, new ArrayList<Item>());
